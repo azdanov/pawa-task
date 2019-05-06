@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <h1 class="title">404 <span class="separator"></span> Not Found</h1>
-    <p class="subtitle">Try going <a class="link" href="/">Home?</a></p>
+    <div class="wrapper">
+      <h1 class="title">404 <span class="separator"></span> Not Found</h1>
+      <p class="subtitle">Try going <a class="link" href="/">Home?</a></p>
+    </div>
   </div>
 </template>
 
@@ -38,5 +40,9 @@ export default {
   text-decoration: none;
   color: $gray-900;
   border-bottom: 2px solid;
+}
+
+.wrapper {
+  margin-bottom: 15vh;
 }
 </style>
