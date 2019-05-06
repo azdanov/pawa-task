@@ -1,0 +1,74 @@
+### Task
+
+GET http://localhost:8080/api/tasks/
+Accept: application/json
+
+###
+
+POST http://localhost:8080/api/tasks/
+Content-Type: application/json
+
+{
+  "title": "Start Project",
+  "description": "Nature picture challenge TV. Opportunity recently fight war. Book forward reduce charge.",
+  "status": true,
+  "priority": "NORMAL",
+  "dueDate": "Mon, 06 May 2019 12:59:17 +0300",
+  "comments": [
+    {
+      "description": "First"
+    },
+    {
+      "description": "Second"
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/tasks/2
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/tasks/
+Content-Type: application/json
+
+{
+  "id": "1",
+  "title": "End Project",
+  "description": "Nature picture challenge TV. Opportunity recently fight war. Book forward reduce charge.",
+  "status": true,
+  "priority": "NORMAL",
+  "dueDate": "Mon, 06 May 2019 12:59:17 +0300",
+  "comments": [
+    {
+      "id": 2,
+      "description": "Second"
+    }
+  ]
+}
+
+###
+
+DELETE http://localhost:8080/api/tasks/1
+
+### Comment
+
+PUT http://localhost:8080/api/comments/
+Content-Type: application/json
+
+{
+  "id": 2,
+  "description": "I'm Second!"
+}
+
+###
+
+DELETE http://localhost:8080/api/comments/2
+
+###
+
+POST http://localhost:8080/api/comments/2
+
+###
