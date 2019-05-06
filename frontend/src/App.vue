@@ -1,29 +1,74 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div id="app" class="subpixel-antialiased">
+    <nav class="nav">
+      <router-link to="/" class="link logo">pawaTask</router-link>
+    </nav>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import "styles/variables";
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+
+html {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  line-height: 1.15;
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  background-color: $gray-900;
+
+  .link {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    color: $white;
+
+    &:hover {
+      border-bottom: 1px solid $white;
     }
+  }
+
+  .logo {
+    font-size: 2rem;
+    letter-spacing: 1px;
   }
 }
 </style>
