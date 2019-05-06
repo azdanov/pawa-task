@@ -108,3 +108,4 @@ pom.xml.bak
 
 .gradle/
 frontend/.gradle/
+bin/

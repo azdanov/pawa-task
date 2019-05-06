@@ -4,4 +4,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'pawa-task'
+
 include 'frontend'

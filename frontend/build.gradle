@@ -7,18 +7,3 @@ node {
     npmVersion = '6.4.1'
     download = true
 }
-
-task buildFrontend(type: NpmTask) {
-    args = ['run', 'build']
-}
-
-task testFrontend(type: NpmTask) {
-    args = ['run', 'test']
-}
-
-task serve(type: NpmTask) {
-    args = ['run', 'serve']
-}
-
-buildFrontend.dependsOn(npm_install)
-

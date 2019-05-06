@@ -23,7 +23,9 @@ dependencies {
 }
 
 processResources {
-    from ('frontend/dist/') {
+    from('frontend/dist/') {
         into 'static'
     }
 }
+
+processResources.dependsOn('frontend:npm_run_build')
