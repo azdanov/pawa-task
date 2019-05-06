@@ -1,0 +1,24 @@
+plugins {
+    id 'com.moowork.node' version '1.3.1'
+}
+
+node {
+    version = '10.15.3'
+    npmVersion = '6.4.1'
+    download = true
+}
+
+task buildFrontend(type: NpmTask) {
+    args = ['run', 'build']
+}
+
+task testFrontend(type: NpmTask) {
+    args = ['run', 'test']
+}
+
+task serve(type: NpmTask) {
+    args = ['run', 'serve']
+}
+
+buildFrontend.dependsOn(npm_install)
+
