@@ -50,3 +50,4 @@ npm run serve
 * Use Spring Rest Starter to remove boilerplate, similar to JpaRepositories.
 * Have an easier way to develop on different platforms by using Docker.
 * Simpler way to develop sql schemas with migrations and seeding of the database with fake data.
+* Use Enum types for priority, e.g https://vladmihalcea.com/the-best-way-to-map-an-enum-type-with-jpa-and-hibernate/
