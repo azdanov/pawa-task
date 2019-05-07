@@ -38,9 +38,7 @@ public class TaskController {
 
     @PostMapping("")
     public Task addTask(@RequestBody Task task) {
-        taskService.save(task);
-
-        return task;
+        return taskService.save(task);
     }
 
     @PutMapping("")

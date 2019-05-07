@@ -20,12 +20,12 @@ public class CommentService implements CommentServiceInterface {
 
     @Override
     @Transactional
-    public void update(Comment comment) {
+    public Comment update(Comment comment) {
         if (!commentRepository.existsById(comment.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not updated");
         }
 
-        commentRepository.save(comment);
+        return commentRepository.save(comment);
     }
 
     @Override

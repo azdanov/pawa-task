@@ -44,21 +44,21 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     @Transactional
-    public void save(Task task) {
+    public Task save(Task task) {
         // Make sure id is not set by user
         task.setId(0);
 
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     @Override
     @Transactional
-    public void update(Task task) {
+    public Task update(Task task) {
         if (!taskRepository.existsById(task.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not updated");
         }
 
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     @Override

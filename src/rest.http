@@ -72,3 +72,12 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/comments/4
 
 ###
+
+POST http://localhost:8080/api/tasks/1/comments
+Content-Type: application/json
+
+{
+  "description": "I'm new!"
+}
+
+###

@@ -9,5 +9,4 @@ public class PawaTaskApplication {
     public static void main(String[] args) {
         SpringApplication.run(PawaTaskApplication.class, args);
     }
-
 }

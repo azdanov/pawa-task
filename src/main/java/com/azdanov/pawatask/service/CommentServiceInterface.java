@@ -4,7 +4,7 @@ import com.azdanov.pawatask.domain.Comment;
 
 public interface CommentServiceInterface {
 
-    void update(Comment comment);
+    Comment update(Comment comment);
 
     void deleteById(int id);
 }

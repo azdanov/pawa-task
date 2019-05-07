@@ -1,5 +1,6 @@
 package com.azdanov.pawatask.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "task")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Task {
 
     @Id
@@ -50,6 +52,10 @@ public class Task {
     private List<Comment> comments;
 
     public Task() {}
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
 
     public int getId() {
         return id;

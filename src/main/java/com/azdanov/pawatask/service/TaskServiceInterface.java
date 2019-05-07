@@ -9,9 +9,9 @@ public interface TaskServiceInterface {
 
     Task findById(int id);
 
-    void save(Task task);
+    Task save(Task task);
 
-    void update(Task task);
+    Task update(Task task);
 
     void deleteById(int id);
 }
