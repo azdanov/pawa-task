@@ -38,3 +38,15 @@ It is possible to use Hot Reloading with Vue.js. First start the Spring Boot app
 ```bash
 npm run serve
 ```
+
+## Commentary
+
+* More robust error handling to prevent security related information leakage.
+* Better validation/sanitization of input and proper response messages.
+* Better Gradle settings.
+* Write tests to make changes easier.
+* Host on Heroku for showcase.
+* Add security layer and associate each user with own tasks.
+* Use Spring Rest Starter to remove boilerplate, similar to JpaRepositories.
+* Have an easier way to develop on different platforms by using Docker.
+* Simpler way to develop sql schemas with migrations and seeding of the database with fake data.
