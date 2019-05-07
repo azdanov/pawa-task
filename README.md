@@ -2,6 +2,21 @@
 
 <small>A simple todo list application that keeps track of your time.</small>
 
+<table>
+    <thead>
+        <tr>
+            <th colspan="3">Screenshots</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr valign="top">
+            <td><img src="./screenshots/1.png"></a></td>
+            <td><img src="./screenshots/2.png"></a></td>
+            <td><img src="./screenshots/3.png"></a></td>
+        </tr>
+    </tbody>
+</table>
+
 ## How To
 
 * To access the application go to: http://localhost:8080/.
