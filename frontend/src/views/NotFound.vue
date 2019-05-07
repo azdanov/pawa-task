@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="wrapper">
+  <div class="wrapper">
+    <div class="center">
       <h1 class="title">404 <span class="separator"></span> Not Found</h1>
       <p class="subtitle">Try going <a class="link" href="/">Home?</a></p>
     </div>
@@ -23,12 +23,12 @@ export default {
   height: 1.6ch;
 }
 
-.container {
+.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 100%;
 }
 
 .title,
@@ -42,7 +42,7 @@ export default {
   border-bottom: 2px solid;
 }
 
-.wrapper {
+.center {
   margin-bottom: 15vh;
 }
 </style>
