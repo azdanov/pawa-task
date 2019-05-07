@@ -107,3 +107,4 @@ $RECYCLE.BIN/
 pom.xml.bak
 
 bin/
+.gradle/
