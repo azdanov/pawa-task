@@ -45,6 +45,10 @@ Content-Type: application/json
     {
       "id": 2,
       "description": "Second"
+    },
+    {
+      "id": 3,
+      "description": "Dozen"
     }
   ]
 }
@@ -59,16 +63,12 @@ PUT http://localhost:8080/api/comments/
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 4,
   "description": "I'm Second!"
 }
 
 ###
 
-DELETE http://localhost:8080/api/comments/2
-
-###
-
-POST http://localhost:8080/api/comments/2
+DELETE http://localhost:8080/api/comments/4
 
 ###
