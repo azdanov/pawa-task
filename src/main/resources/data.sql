@@ -10,7 +10,7 @@ VALUES (2,
         'whiteboard back-end channels',
         'Campaign others team. Better base everything phone hope. According their leader.',
         'HIGH',
-        TRUE,
+        FALSE,
         '2019-05-09 05:52:17.000000');
 INSERT IGNORE INTO task
 VALUES (3,
