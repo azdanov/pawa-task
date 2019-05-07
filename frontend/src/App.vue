@@ -33,7 +33,6 @@ export default {
 
 <style lang="scss">
 @import "styles/variables";
-@import "styles/spacing";
 @import "styles/defaults";
 @import "styles/utilities";
 
