@@ -3,9 +3,9 @@
     <label :for="label" class="label">{{ label }}</label>
     <input
       :id="label"
-      type="datetime-local"
       :value="parsedDate"
       class="focus input"
+      type="datetime-local"
       @input="$emit('input', $event.target.value)"
     />
   </div>
@@ -13,6 +13,7 @@
 
 <script>
 import { format, parse } from "date-fns";
+
 export default {
   name: "DateTime",
   props: {

@@ -1,7 +1,7 @@
 <template>
   <div id="layout">
     <nav class="nav">
-      <router-link to="/" class="link logo focus">pawaTask</router-link>
+      <router-link class="link logo focus" to="/">pawaTask</router-link>
     </nav>
     <main class="container">
       <router-view />

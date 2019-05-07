@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .form {
   margin: 1rem 2rem;
   display: flex;

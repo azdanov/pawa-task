@@ -1,14 +1,14 @@
 <template>
   <ModalBase :close="close">
     <Form>
-      <input type="hidden" name="id" :value="newTask.id" />
+      <input :value="newTask.id" name="id" type="hidden" />
       <Input v-model="newTask.title" label="Title" type="text" />
       <Input
         v-model="newTask.description"
         label="Description"
         type="textarea"
       />
-      <Select v-model="newTask.priority" label="Priority" :choices="priority" />
+      <Select v-model="newTask.priority" :choices="priority" label="Priority" />
       <DateTime v-model="newTask.dueDate" label="Due Date" />
       <div class="actions">
         <Checkbox v-model="newTask.status" label="Completed" />
@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../styles/variables";
 
 .label {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="overlay" @click="close()"></div>
-    <div ref="modal" class="box" :style="`margin-top: -${modalHeight / 2}px`">
+    <div ref="modal" :style="`margin-top: -${modalHeight / 2}px`" class="box">
       <button ref="close" class="link close focus" @click="close()">
         Close
       </button>
@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../styles/variables";
 
 .overlay {

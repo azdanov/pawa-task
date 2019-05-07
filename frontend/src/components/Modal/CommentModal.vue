@@ -1,9 +1,9 @@
 <template>
   <ModalBase :close="close">
     <Form>
-      <input type="hidden" name="id" :value="newComment.id" />
-      <input type="hidden" name="task_id" :value="newComment.task_id" />
-      <Input type="textarea" label="Comment" :value="newComment.description" />
+      <input :value="newComment.id" name="id" type="hidden" />
+      <input :value="newComment.task_id" name="task_id" type="hidden" />
+      <Input :value="newComment.description" label="Comment" type="textarea" />
       <Button>Submit</Button>
     </Form>
   </ModalBase>
@@ -14,6 +14,7 @@ import Button from "@/components/Button";
 import ModalBase from "@/components/Modal/ModalBase";
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
+
 export default {
   name: "CommentModal",
   components: { Input, Form, ModalBase, Button },
@@ -33,4 +34,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

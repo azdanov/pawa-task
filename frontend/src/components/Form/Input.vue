@@ -4,8 +4,8 @@
     <textarea
       v-if="type === 'textarea'"
       :id="label"
-      class="focus textarea"
       :value="value"
+      class="focus textarea"
       rows="4"
     ></textarea>
     <input
@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../styles/variables";
 
 .box,

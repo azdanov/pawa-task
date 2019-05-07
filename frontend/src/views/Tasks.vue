@@ -8,6 +8,7 @@
 <script>
 import { mapState } from "vuex";
 import TaskList from "@/components/TaskList";
+
 export default {
   components: { TaskList },
   computed: {

@@ -2,9 +2,9 @@
   <div class="box">
     <input
       :id="label"
-      type="checkbox"
       :value="value"
       class="checkbox"
+      type="checkbox"
       @input="$emit('input', $event.target.value)"
     />
     <label :for="label" class="label"
@@ -23,8 +23,9 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../styles/variables";
+
 .box {
   width: 100%;
   color: $gray-800;
@@ -33,11 +34,13 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .label {
   font-weight: 400;
   font-size: 1rem;
   margin: 0.3rem 0;
 }
+
 .checkbox {
   opacity: 0;
   position: absolute;

@@ -8,8 +8,8 @@
       <Task
         v-for="task in tasks"
         :key="task.id"
-        :task="task"
         :open="open[task.id]"
+        :task="task"
         @toggle="toggle"
       ></Task>
     </div>
@@ -19,6 +19,7 @@
 <script>
 import Task from "@/components/Task";
 import TaskModal from "@/components/Modal/TaskModal";
+
 export default {
   name: "TaskList",
   components: { TaskModal, Task },
@@ -42,8 +43,9 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../styles/variables";
+
 .tasks {
   margin: 0 auto 3rem;
 

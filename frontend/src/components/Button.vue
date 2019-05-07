@@ -1,5 +1,7 @@
 <template>
-  <button class="focus button"><slot></slot></button>
+  <button class="focus button">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
@@ -8,7 +10,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../styles/variables";
 
 .button {

@@ -2,8 +2,8 @@
   <div class="comments">
     <Portal v-if="openModal" to="modal">
       <CommentModal
-        :comment="selectedComment"
         :close="() => (openModal = false)"
+        :comment="selectedComment"
       ></CommentModal>
     </Portal>
     <button class="link add" @click.stop="addComment">
@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../styles/variables";
 
 .comments {

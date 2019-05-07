@@ -10,6 +10,7 @@
 
 <script>
 import Arrow from "@/components/Icons/Arrow";
+
 export default {
   name: "Select",
   components: { Arrow },
@@ -21,19 +22,22 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "../../styles/variables";
+
 .box {
   width: 100%;
   color: $gray-800;
   margin: 0.3rem 0;
   position: relative;
 }
+
 .label {
   font-weight: 400;
   font-size: 1rem;
   margin: 0.3rem 0;
 }
+
 .select {
   margin-top: 0.3rem;
   width: 100%;
@@ -44,6 +48,7 @@ export default {
   padding: 0.3rem 0.5rem;
   font-size: $text-sm;
 }
+
 .arrow {
   z-index: 100;
   width: 1.2rem;
