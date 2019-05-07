@@ -27,7 +27,11 @@
       <p class="meta__item">Priority: {{ task.priority }}</p>
       <p class="meta__item">Due: {{ date(task.dueDate) }}</p>
     </div>
-    <CommentList v-if="open" :comments="task.comments"></CommentList>
+    <CommentList
+      v-if="open"
+      :task-id="task.id"
+      :comments="task.comments"
+    ></CommentList>
     <Arrow :rotate="open ? 180 : 0" class="arrow"></Arrow>
   </div>
 </template>

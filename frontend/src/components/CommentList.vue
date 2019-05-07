@@ -4,16 +4,18 @@
       <CommentModal
         :close="() => (openModal = false)"
         :comment="selectedComment"
+        :task-id="taskId"
+        :edit="selectedComment !== undefined"
       ></CommentModal>
     </Portal>
     <button class="link add" @click.stop="addComment">
-      Add Comment
+      Add&nbsp;Comment
     </button>
 
     <div v-for="comment in comments" :key="comment.id" class="comments__item">
       <p>{{ comment.description }}</p>
       <button class="link edit" @click.stop="editComment(comment.id)">
-        Edit Comment
+        Edit&nbsp;Comment
       </button>
     </div>
   </div>
@@ -25,7 +27,10 @@ import CommentModal from "@/components/Modal/CommentModal";
 export default {
   name: "CommentList",
   components: { CommentModal },
-  props: { comments: { type: Array, required: true } },
+  props: {
+    comments: { type: Array, required: true },
+    taskId: { type: Number, required: true }
+  },
   data: function() {
     return { openModal: false };
   },
@@ -55,7 +60,8 @@ export default {
     padding: 0.5rem 0;
     margin-right: 0.5rem;
     line-height: 1.3;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid $gray-100;
 
     &:last-child {
@@ -70,8 +76,5 @@ export default {
 }
 
 .edit {
-  bottom: 10px;
-  position: absolute;
-  right: 0;
 }
 </style>

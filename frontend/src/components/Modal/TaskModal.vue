@@ -1,6 +1,6 @@
 <template>
   <ModalBase :close="close">
-    <Form>
+    <Form :on-submit="submit">
       <input :value="newTask.id" name="id" type="hidden" />
       <Input v-model="newTask.title" label="Title" type="text" />
       <Input
@@ -51,6 +51,11 @@ export default {
   computed: {
     newTask() {
       return { ...this.task };
+    }
+  },
+  methods: {
+    submit() {
+      this.close();
     }
   }
 };

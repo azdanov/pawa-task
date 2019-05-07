@@ -1,12 +1,15 @@
 <template>
-  <form class="form">
+  <form class="form" @submit.prevent="onSubmit">
     <slot></slot>
   </form>
 </template>
 
 <script>
 export default {
-  name: "Form"
+  name: "Form",
+  props: {
+    onSubmit: { type: Function, required: true }
+  }
 };
 </script>
 

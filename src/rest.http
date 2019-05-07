@@ -63,7 +63,7 @@ PUT http://localhost:8080/api/comments/
 Content-Type: application/json
 
 {
-  "id": 4,
+  "id": 2,
   "description": "I'm Second!"
 }
 
