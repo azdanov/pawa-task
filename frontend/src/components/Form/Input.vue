@@ -7,6 +7,7 @@
       :value="value"
       class="focus textarea"
       rows="4"
+      @input="$emit('input', $event.target.value)"
     ></textarea>
     <input
       v-else

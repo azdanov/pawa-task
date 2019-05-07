@@ -3,7 +3,7 @@
     <Form>
       <input :value="newComment.id" name="id" type="hidden" />
       <input :value="newComment.task_id" name="task_id" type="hidden" />
-      <Input :value="newComment.description" label="Comment" type="textarea" />
+      <Input v-model="newComment.description" label="Comment" type="textarea" />
       <Button>Submit</Button>
     </Form>
   </ModalBase>
@@ -26,10 +26,13 @@ export default {
       default: () => ({ id: 0, description: "", task_id: 0 })
     }
   },
-  computed: {
-    newComment() {
-      return { ...this.comment };
-    }
+  data: function() {
+    return {
+      newComment: null
+    };
+  },
+  created() {
+    this.newComment = Object.assign({}, this.newComment, { ...this.comment });
   }
 };
 </script>
