@@ -84,7 +84,7 @@ export default {
 .arrow {
   width: 1.5rem;
   height: 1.5rem;
-  right: 10px;
+  right: 15px;
   top: calc(50% - 1.5rem / 2);
   float: right;
   cursor: pointer;
