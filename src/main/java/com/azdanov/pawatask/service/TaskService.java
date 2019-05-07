@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -20,11 +21,13 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
+    @Transactional
     public List<Task> findAll() {
         return taskRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Task findById(int id) {
         Optional<Task> result = taskRepository.findById(id);
 
@@ -40,6 +43,7 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
+    @Transactional
     public void save(Task task) {
         // Make sure id is not set by user
         task.setId(0);
@@ -48,6 +52,7 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
+    @Transactional
     public void update(Task task) {
         if (!taskRepository.existsById(task.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not updated");
@@ -57,6 +62,7 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         taskRepository.deleteById(id);
     }
