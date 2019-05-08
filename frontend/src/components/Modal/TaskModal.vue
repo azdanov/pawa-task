@@ -10,12 +10,14 @@
       />
       <Select v-model="newTask.priority" :choices="priority" label="Priority" />
       <DateTime v-model="newTask.dueDate" label="Due Date" />
-      <Checkbox v-model="newTask.status" label="Completed" />
-      <div class="actions">
-        <button v-if="edit" class="link focus remove" @click.prevent="remove">
-          Remove
-        </button>
-        <Button class="button">Submit</Button>
+      <div :class="[edit ? 'footer--edit' : 'footer']">
+        <Checkbox v-model="newTask.status" label="Completed" />
+        <div :class="[edit ? 'actions' : 'actions--add']">
+          <button v-if="edit" class="link focus remove" @click.prevent="remove">
+            Remove
+          </button>
+          <Button class="button">Submit</Button>
+        </div>
       </div>
     </Form>
   </ModalBase>
@@ -62,6 +64,10 @@ export default {
   methods: {
     ...mapActions(["saveTask", "updateTask", "deleteTask"]),
     remove() {
+      if (!window.confirm(`Remove "${this.newTask.title}"?`)) {
+        return;
+      }
+
       this.deleteTask(this.newTask.id);
       this.close();
     },
@@ -91,7 +97,26 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  align-items: center;
   margin-top: 1rem;
+
+  &--add {
+    margin-top: 0;
+  }
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+
+  &--edit {
+    margin-top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .remove {
