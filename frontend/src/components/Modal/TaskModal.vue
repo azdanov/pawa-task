@@ -33,6 +33,7 @@ export default {
   components: { DateTime, Checkbox, Input, Form, ModalBase, Button, Select },
   props: {
     close: { type: Function, required: true },
+    edit: { type: Boolean, required: false, default: false },
     task: {
       type: Object,
       required: false,
@@ -56,9 +57,13 @@ export default {
     this.newTask = Object.assign({}, this.newTask, { ...this.task });
   },
   methods: {
-    ...mapActions(["saveTask"]),
+    ...mapActions(["saveTask", "updateTask"]),
     submit() {
-      this.saveTask(this.newTask);
+      if (this.edit) {
+        this.updateTask(this.newTask);
+      } else {
+        this.saveTask(this.newTask);
+      }
       this.close();
     }
   }

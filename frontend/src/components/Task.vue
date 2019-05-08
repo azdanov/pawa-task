@@ -6,7 +6,11 @@
     @keyup.enter="onOpen(task.id)"
   >
     <Portal v-if="openModal" to="modal">
-      <TaskModal :close="() => (openModal = false)" :task="task"></TaskModal>
+      <TaskModal
+        :edit="true"
+        :close="() => (openModal = false)"
+        :task="task"
+      ></TaskModal>
     </Portal>
     <p :class="['text', task.status && !open ? 'checked' : '']">
       <span class="title">{{ task.title }}</span>

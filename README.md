@@ -70,7 +70,9 @@ npm run serve
 - Use Enum types for priority, e.g https://vladmihalcea.com/the-best-way-to-map-an-enum-type-with-jpa-and-hibernate/
 - ~~Find a better way to add individual comments~~ (Extracted to TaskCommentController and TaskControllerService)
 - Find a way to make one-to-many and many-to-one relationship work. Right now when saving a Task that contains Comments no relationship is created. Comments have an empty foreign key.
+- Figure out which formats Data accepts.
 
 ### Frontend
 
-- Extract additional components and styles where necessary
+- Refactor additional components and styles where necessary.
+- Write E2E tests to verify integrity.
