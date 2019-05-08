@@ -3,6 +3,8 @@ export default {
     const body = await fetch("/api/tasks");
     const tasks = await body.json();
 
+    tasks.sort((a, b) => b.id - a.id);
+
     commit("FETCH_TASKS", tasks);
   },
   async saveComment({ commit }, { taskId, comment }) {
@@ -11,6 +13,11 @@ export default {
       body: JSON.stringify(comment),
       headers: { "Content-Type": "application/json" }
     });
+
+    if (!response.ok) {
+      return;
+    }
+
     const task = await response.json();
     commit("UPDATE_TASK", task);
   },
@@ -20,12 +27,36 @@ export default {
       body: JSON.stringify(comment),
       headers: { "Content-Type": "application/json" }
     });
+
+    if (!response.ok) {
+      return;
+    }
+
     const commentUpdated = await response.json();
     commit("UPDATE_COMMENT", commentUpdated);
   },
   async deleteComment({ dispatch }, commentId) {
-    await fetch(`/api/comments/${commentId}`, { method: "delete" });
+    const response = await fetch(`/api/comments/${commentId}`, {
+      method: "delete"
+    });
+
+    if (!response.ok) {
+      return;
+    }
 
     dispatch("fetchTasks");
+  },
+  async saveTask({ commit }, task) {
+    const response = await fetch(`/api/tasks`, {
+      method: "post",
+      body: JSON.stringify(task),
+      headers: { "Content-Type": "application/json" }
+    });
+    if (!response.ok) {
+      return;
+    }
+
+    const taskNew = await response.json();
+    commit("UPDATE_TASK", taskNew);
   }
 };

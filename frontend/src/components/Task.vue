@@ -131,14 +131,33 @@ export default {
   }
 
   &__absolute {
-    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: baseline;
     top: 21px;
     right: 20px;
+    margin-bottom: 0.5rem;
   }
 
   &__edit {
+    margin-left: 0.5rem;
+    margin-right: auto;
     font-size: $text-sm;
-    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+  }
+}
+@media (min-width: 576px) {
+  .meta {
+    &__absolute {
+      position: absolute;
+      display: block;
+      margin-bottom: 0;
+    }
+    &__edit {
+      margin-left: 0;
+      margin-right: 0.5rem;
+      margin-top: 0;
+    }
   }
 }
 </style>

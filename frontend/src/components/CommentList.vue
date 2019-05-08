@@ -28,7 +28,7 @@ export default {
   name: "CommentList",
   components: { CommentModal },
   props: {
-    comments: { type: Array, required: true },
+    comments: { type: Array, required: false, default: () => [] },
     taskId: { type: Number, required: true }
   },
   data: function() {

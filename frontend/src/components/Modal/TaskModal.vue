@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Button from "@/components/Button";
 import ModalBase from "@/components/Modal/ModalBase";
 import Form from "@/components/Form/Form";
@@ -46,15 +47,18 @@ export default {
     }
   },
   data: function() {
-    return { priority: ["LOW", "NORMAL", "HIGH"] };
+    return {
+      priority: ["LOW", "NORMAL", "HIGH"],
+      newTask: null
+    };
   },
-  computed: {
-    newTask() {
-      return { ...this.task };
-    }
+  created() {
+    this.newTask = Object.assign({}, this.newTask, { ...this.task });
   },
   methods: {
+    ...mapActions(["saveTask"]),
     submit() {
+      this.saveTask(this.newTask);
       this.close();
     }
   }

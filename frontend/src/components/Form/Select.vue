@@ -2,7 +2,12 @@
   <div class="box">
     <Arrow class="arrow"></Arrow>
     <label :for="label" class="label">{{ label }} </label>
-    <select :id="label" :value="value" class="focus select">
+    <select
+      :id="label"
+      :value="value"
+      class="focus select"
+      @input="$emit('input', $event.target.value)"
+    >
       <option v-for="choice in choices" :key="choice">{{ choice }}</option>
     </select>
   </div>

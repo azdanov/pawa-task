@@ -5,7 +5,7 @@
       :value="value"
       class="checkbox"
       type="checkbox"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('input', !value)"
     />
     <label :for="label" class="label"
       >{{ label }} <span class="checkmark"></span
