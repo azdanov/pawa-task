@@ -12,12 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class TaskCommentService implements TaskCommentInterface {
 
-    private TaskRepository taskRepository;
-
     @Autowired
-    public TaskCommentService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private TaskRepository taskRepository;
 
     @Override
     @Transactional

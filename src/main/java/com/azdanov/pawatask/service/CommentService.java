@@ -11,12 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class CommentService implements CommentServiceInterface {
 
-    private CommentRepository commentRepository;
-
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
+    private CommentRepository commentRepository;
 
     @Override
     @Transactional
