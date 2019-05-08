@@ -10,8 +10,11 @@
       />
       <Select v-model="newTask.priority" :choices="priority" label="Priority" />
       <DateTime v-model="newTask.dueDate" label="Due Date" />
+      <Checkbox v-model="newTask.status" label="Completed" />
       <div class="actions">
-        <Checkbox v-model="newTask.status" label="Completed" />
+        <button v-if="edit" class="link focus remove" @click.prevent="remove">
+          Remove
+        </button>
         <Button class="button">Submit</Button>
       </div>
     </Form>
@@ -57,7 +60,11 @@ export default {
     this.newTask = Object.assign({}, this.newTask, { ...this.task });
   },
   methods: {
-    ...mapActions(["saveTask", "updateTask"]),
+    ...mapActions(["saveTask", "updateTask", "deleteTask"]),
+    remove() {
+      this.deleteTask(this.newTask.id);
+      this.close();
+    },
     submit() {
       if (this.edit) {
         this.updateTask(this.newTask);
@@ -82,7 +89,12 @@ export default {
 
 .actions {
   display: flex;
+  justify-content: space-between;
   width: 100%;
   margin-top: 1rem;
+}
+
+.remove {
+  font-size: $text-sm;
 }
 </style>

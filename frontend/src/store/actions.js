@@ -78,5 +78,17 @@ export default {
     const taskNew = await response.json();
     commit("UPDATE_TASK", taskNew);
     dispatch("sortTasks");
+  },
+  async deleteTask({ dispatch }, taskId) {
+    const response = await fetch(`/api/tasks/${taskId}`, {
+      method: "delete"
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    dispatch("fetchTasks");
+    dispatch("sortTasks");
   }
 };

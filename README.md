@@ -76,3 +76,4 @@ npm run serve
 
 - Refactor additional components and styles where necessary.
 - Write E2E tests to verify integrity.
+- Remove task sorting in Vuex, and query proper task order in Backend.
