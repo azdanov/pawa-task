@@ -33,6 +33,9 @@ git clone https://github.com/azdanov/pawa-task
 
 cd pawa-task
 
+# Make sure the DB is set (use src/main/resources/init.sql)
+# src/main/resources/application.properties
+
 ./gradlew bootRun
 ```
 
