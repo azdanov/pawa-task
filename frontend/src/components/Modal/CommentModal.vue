@@ -4,7 +4,12 @@
       <input :value="newComment.id" name="id" type="hidden" />
       <input :value="newComment.task_id" name="task_id" type="hidden" />
       <Input v-model="newComment.description" label="Comment" type="textarea" />
-      <Button>Submit</Button>
+      <div class="actions">
+        <button v-if="edit" class="link focus remove" @click.prevent="remove">
+          Remove
+        </button>
+        <Button>Submit</Button>
+      </div>
     </Form>
   </ModalBase>
 </template>
@@ -38,7 +43,11 @@ export default {
     this.newComment = Object.assign({}, this.newComment, { ...this.comment });
   },
   methods: {
-    ...mapActions(["saveComment", "updateComment"]),
+    ...mapActions(["saveComment", "updateComment", "deleteComment"]),
+    remove() {
+      this.deleteComment(this.newComment.id);
+      this.close();
+    },
     submit() {
       if (this.edit) {
         this.updateComment(this.newComment);
@@ -51,4 +60,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../../styles/variables";
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.remove {
+  font-size: $text-sm;
+  color: $gray-800;
+}
+</style>

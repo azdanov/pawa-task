@@ -22,5 +22,10 @@ export default {
     });
     const commentUpdated = await response.json();
     commit("UPDATE_COMMENT", commentUpdated);
+  },
+  async deleteComment({ dispatch }, commentId) {
+    await fetch(`/api/comments/${commentId}`, { method: "delete" });
+
+    dispatch("fetchTasks");
   }
 };

@@ -105,6 +105,7 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 pom.xml.bak
-
+!gradle/wrapper/gradle-wrapper.jar
 bin/
 .gradle/
+
