@@ -1,23 +1,12 @@
 <template>
   <div>
     <h1 class="title">Tasks</h1>
-    <TaskList :tasks="tasks"></TaskList>
+    <p>tasks</p>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import TaskList from "@/components/TaskList";
-
-export default {
-  components: { TaskList },
-  computed: {
-    ...mapState(["tasks"])
-  },
-  created() {
-    this.$store.dispatch("fetchTasks");
-  }
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
