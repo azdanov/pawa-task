@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,9 +41,8 @@ public class Task {
     @Column(name = "due_date")
     private Date dueDate;
 
-    @NotBlank
-    @Column(name = "priority")
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     @NotNull
     @Column(name = "status")
@@ -89,11 +90,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
