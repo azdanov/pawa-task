@@ -1,5 +1,12 @@
 <template>
   <ul class="list">
+    <Portal v-if="openModal" to="modal">
+      <TaskModal
+        :edit="true"
+        :close="() => (openModal = false)"
+        :task="selectedTask"
+      ></TaskModal>
+    </Portal>
     <li v-for="task in tasks" :key="task.id" class="task">
       <Checkbox
         v-model="task.status"
@@ -13,7 +20,7 @@
         <Button
           ><img class="icon" src="../assets/speech-bubble.png" alt="Speech Icon"
         /></Button>
-        <Button
+        <Button @click.native.prevent="() => editTask(task)"
           ><img class="icon" src="../assets/pencil.png" alt="Pencil"
         /></Button>
       </div>
@@ -23,15 +30,27 @@
 
 <script>
 import { mapActions } from "vuex";
-import Button from "@/components/Button";
-import Checkbox from "@/components/Checkbox";
+import Button from "../components/Button";
+import TaskModal from "../components/Modal/TaskModal";
+import Checkbox from "../components/Checkbox";
+
 export default {
-  components: { Checkbox, Button },
+  components: { Checkbox, Button, TaskModal },
   props: { tasks: { type: Array, required: true } },
+  data: function() {
+    return {
+      openModal: false,
+      selectedTask: {}
+    };
+  },
   methods: {
     ...mapActions(["completeTask"]),
     toggleStatus(task) {
       this.completeTask(task);
+    },
+    editTask(task) {
+      this.openModal = true;
+      this.selectedTask = Object.assign({}, this.selectedTask, task);
     }
   }
 };

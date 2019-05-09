@@ -13,6 +13,11 @@ Vue.filter("date", function(value) {
   return format(value, "DD/MM/YYYY");
 });
 
+Vue.filter("capitalize", function(value) {
+  if (!value) return "";
+  return `${value[0].toUpperCase()}${value.slice(1)}`;
+});
+
 new Vue({
   router,
   store,

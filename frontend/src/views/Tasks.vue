@@ -6,7 +6,7 @@
     <main class="main">
       <header class="header">
         <h1 class="title">PawaTask</h1>
-        <Button :on-click="addTask">Add a new task</Button>
+        <Button @click.native.prevent="addTask">Add a new task</Button>
       </header>
       <TaskList v-if="tasks" :tasks="tasks"></TaskList>
       <p v-else>

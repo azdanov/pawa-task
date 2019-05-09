@@ -51,24 +51,25 @@
           v-for="priority in priorities"
           :key="priority"
           :value="priority"
-          >{{ priority }}</option
+          >{{ priority | capitalize }}</option
         >
       </select>
 
       <label class="label" for="comments">Comments:</label>
       <textarea id="comments" class="comments" rows="5" disabled></textarea>
 
-      <footer class="footer footer--single">
-        <Button v-if="edit" class="link" @click.prevent="remove"
+      <footer :class="['footer', edit ? '' : 'footer--single']">
+        <Button v-if="edit" class="link" @click.native.prevent="remove"
           >Remove task</Button
         >
-        <Button class="button">Add a new task</Button>
+        <Button class="button">{{ edit ? "Edit" : "Add a new" }} task</Button>
       </footer>
     </form>
   </ModalBase>
 </template>
 
 <script>
+import { getYear, getMonth, getDate } from "date-fns";
 import { mapActions } from "vuex";
 import ModalBase from "./BaseModal";
 import Button from "@/components/Button";
@@ -89,7 +90,7 @@ export default {
         priority: "",
         status: false,
         dueDate: "",
-        comments: {}
+        comments: []
       })
     }
   },
@@ -107,6 +108,24 @@ export default {
   },
   created() {
     this.newTask = Object.assign({}, this.newTask, { ...this.task });
+
+    let date;
+
+    if (this.edit) {
+      date = {
+        year: getYear(this.task.dueDate),
+        month: getMonth(this.task.dueDate) + 1,
+        day: getDate(this.task.dueDate)
+      };
+    } else {
+      date = {
+        year: "",
+        month: "",
+        day: ""
+      };
+    }
+
+    this.date = Object.assign({}, this.date, date);
   },
   methods: {
     ...mapActions(["saveTask", "updateTask", "deleteTask"]),
@@ -120,7 +139,7 @@ export default {
     },
     submit() {
       const { year, month, day } = this.date;
-      this.newTask.dueDate = new Date(year, month, day);
+      this.newTask.dueDate = new Date(year, month - 1, day);
 
       if (this.edit) {
         this.updateTask(this.newTask);
@@ -193,6 +212,7 @@ export default {
   display: block;
   width: 60%;
   font-size: $font-size;
+  font-family: initial;
 }
 
 .comments {
