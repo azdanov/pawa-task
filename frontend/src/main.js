@@ -1,12 +1,17 @@
+import VueTimeago from "vue-timeago";
+import { format } from "date-fns";
 import Vue from "vue";
 import PortalVue from "portal-vue";
 import App from "./App";
 import router from "./router";
 import store from "./store";
-import { format } from "date-fns";
 
 Vue.config.productionTip = false;
 Vue.use(PortalVue);
+Vue.use(VueTimeago, {
+  name: "Timeago",
+  locale: "en"
+});
 
 Vue.filter("date", function(value) {
   if (!value) return "";

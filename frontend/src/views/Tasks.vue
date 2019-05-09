@@ -31,7 +31,7 @@ export default {
     ...mapState(["tasks"])
   },
   created() {
-    this.$store.dispatch("fetchTasks");
+    this.$store.dispatch("getTasks");
   },
   methods: {
     addTask() {

@@ -4,7 +4,7 @@ export default {
   sortTasks({ state }) {
     state.tasks.sort((a, b) => a.id - b.id);
   },
-  async fetchTasks({ commit, dispatch }) {
+  async getTasks({ commit, dispatch }) {
     const response = await fetch("/api/tasks");
     const tasks = await response.json();
     if (!response.ok) {
@@ -57,11 +57,27 @@ export default {
       return;
     }
 
-    dispatch("fetchTasks");
+    dispatch("getTasks");
   },
   async completeTask({ dispatch }, task) {
     task.status = !task.status;
 
     dispatch("updateTask", task);
+  },
+  async saveComment({ commit, dispatch }, { taskId, comment }) {
+    const response = await fetch(`/api/tasks/${taskId}/comments`, {
+      method: "post",
+      body: JSON.stringify(comment),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
+
+    const task = await response.json();
+    commit("UPDATE_TASK", task);
+    dispatch("sortTasks");
   }
 };

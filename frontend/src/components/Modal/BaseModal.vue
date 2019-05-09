@@ -3,7 +3,12 @@
     <div class="overlay" @click="close()"></div>
     <div ref="modal" :style="`margin-top: -${modalHeight / 2}px`" class="box">
       <header class="header">
-        <h2 ref="title" class="title" tabindex="-1">{{ title }}</h2>
+        <div class="section">
+          <h2 ref="title" class="title" tabindex="-1">{{ title }}</h2>
+          <button class="link action" @click="action.callback">
+            {{ action.title }}
+          </button>
+        </div>
         <button class="link close" @click="close()">
           <img class="close" src="../../assets/multiply.png" alt="Close" />
         </button>
@@ -18,7 +23,12 @@ export default {
   name: "ModalBase",
   props: {
     title: { type: String, required: true },
-    close: { type: Function, required: true }
+    close: { type: Function, required: true },
+    action: {
+      type: Object,
+      required: false,
+      default: () => ({ title: "", callback: () => {} })
+    }
   },
   data: function() {
     return { modalHeight: 0 };
@@ -32,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
+@import "../../styles/common";
 
 .title {
   margin: 0;
@@ -56,14 +67,14 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 300px;
-  margin-left: -150px;
   border: 1px solid $gray;
   padding: 1rem;
+  width: 400px;
+  margin-left: -200px;
 
   @media (min-width: 600px) {
-    width: 400px;
-    margin-left: -200px;
+    width: 500px;
+    margin-left: -250px;
   }
 }
 
@@ -71,6 +82,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .section {
+    display: flex;
+    align-items: center;
+
+    .action {
+      display: inline-block;
+      margin-left: 0.8rem;
+      margin-top: 0.2rem;
+    }
+  }
 
   .close {
     cursor: pointer;
