@@ -6,9 +6,10 @@
       type="checkbox"
       :checked="value"
       :value="value"
-      @input="$emit('input', !value)"
+      @input="$emit('title', value)"
+      @change="onChecked()"
     />
-    <label :for="name" class="label" @click="onChecked()">
+    <label :for="name" class="label">
       <h2 class="title"><slot></slot></h2>
       <span class="checkmark"></span>
     </label>

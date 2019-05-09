@@ -1,9 +1,12 @@
 <template>
   <div class="body">
+    <Portal v-if="openModal" to="modal">
+      <TaskModal :close="() => (openModal = false)"></TaskModal>
+    </Portal>
     <main class="main">
       <header class="header">
         <h1 class="title">PawaTask</h1>
-        <Button>Add a new task</Button>
+        <Button :on-click="addTask">Add a new task</Button>
       </header>
       <TaskList v-if="tasks" :tasks="tasks"></TaskList>
       <p v-else>
@@ -16,20 +19,32 @@
 <script>
 import { mapState } from "vuex";
 import TaskList from "../components/TaskList";
-import Button from "@/components/Button";
+import Button from "../components/Button";
+import TaskModal from "../components/Modal/TaskModal";
+
 export default {
-  components: { Button, TaskList },
+  components: { Button, TaskList, TaskModal },
+  data: function() {
+    return { openModal: false };
+  },
   computed: {
     ...mapState(["tasks"])
   },
   created() {
     this.$store.dispatch("fetchTasks");
+  },
+  methods: {
+    addTask() {
+      this.openModal = true;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../styles/variables";
+@import "../styles/common";
+
 .body {
   background: $gray-lightest;
   min-height: 100vh;
@@ -55,14 +70,5 @@ export default {
   align-items: center;
   border-bottom: 1px solid $gray;
   padding-bottom: 0.8rem;
-}
-.link {
-  background: none;
-  border: none;
-  padding: 0;
-  color: $orange;
-  cursor: pointer;
-  font-family: initial;
-  text-decoration: underline;
 }
 </style>

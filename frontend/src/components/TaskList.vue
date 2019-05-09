@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-for="task in tasks" :key="task.id" class="task">
+  <ul class="list">
+    <li v-for="task in tasks" :key="task.id" class="task">
       <Checkbox
         v-model="task.status"
         :name="task.id"
@@ -17,8 +17,8 @@
           ><img class="icon" src="../assets/pencil.png" alt="Pencil"
         /></Button>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -39,6 +39,11 @@ export default {
 
 <style scoped lang="scss">
 @import "../styles/variables";
+.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 .task {
   display: flex;
   border-bottom: 1px solid $gray;
