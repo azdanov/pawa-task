@@ -80,12 +80,29 @@ export default {
     commit("UPDATE_TASK", task);
     dispatch("sortTasks");
   },
+  async updateComment({ commit, dispatch }, comment) {
+    const response = await fetch(`/api/comments`, {
+      method: "put",
+      body: JSON.stringify(comment),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
+
+    const commentUpdated = await response.json();
+    commit("UPDATE_COMMENT", commentUpdated);
+    dispatch("sortTasks");
+  },
   async deleteComment({ dispatch }, commentId) {
     const response = await fetch(`/api/comments/${commentId}`, {
       method: "delete"
     });
 
     if (!response.ok) {
+      console.error(response);
       return;
     }
 

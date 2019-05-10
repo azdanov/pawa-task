@@ -11,35 +11,57 @@
         <small class="date"
           ><timeago :datetime="taskComment.date"></timeago
         ></small>
-        -
-        <button class="link remove" @click.prevent="() => removeComment(index)">
-          Remove
-        </button>
-        -
-        <button class="link edit" @click.prevent="() => editComment(index)">
-          Edit
-        </button>
+        <div v-if="edit" class="actions">
+          -
+          <button
+            class="link remove"
+            @click.prevent="() => removeComment(index)"
+          >
+            Remove
+          </button>
+          -
+          <button class="link edit" @click.prevent="() => editComment(index)">
+            Edit
+          </button>
+        </div>
       </div>
-      <p class="text">{{ taskComment.text }}</p>
+      <div v-if="editingComment === index" class="commentEdit">
+        <textarea v-model="taskComment.text" class="textarea"></textarea>
+        <Button class="save" @click.native.prevent="() => saveComment(index)"
+          >Save</Button
+        >
+      </div>
+      <p v-else class="text">{{ taskComment.text }}</p>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import Button from "@/components/Button";
 export default {
   name: "Comments",
+  components: { Button },
   props: {
     comments: { type: Array, required: true },
     edit: { type: Boolean, required: false, default: false }
   },
+  data: function() {
+    return {
+      editingComment: null
+    };
+  },
   methods: {
-    ...mapActions(["deleteComment"]),
+    ...mapActions(["deleteComment", "updateComment"]),
     removeComment(index) {
       this.deleteComment(this.comments[index].id);
     },
     editComment(index) {
-      console.log(index);
+      this.editingComment = index;
+    },
+    saveComment(index) {
+      this.updateComment(this.comments[index]);
+      this.editingComment = null;
     }
   }
 };
@@ -71,9 +93,31 @@ export default {
   margin: 0;
   color: $gray;
 }
+.save,
 .remove,
 .edit,
 .meta {
   font-size: small;
+}
+.commentEdit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.textarea {
+  width: 100%;
+  border: 1px solid $gray;
+  display: block;
+  padding: 0.4rem;
+  margin: 0;
+  font-size: $font-size;
+  font-family: initial;
+}
+.save {
+  margin-top: 0.5rem;
+}
+.actions {
+  display: inline-block;
+  margin-left: 0.2rem;
 }
 </style>

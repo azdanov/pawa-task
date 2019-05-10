@@ -1,5 +1,5 @@
 <template>
-  <ModalBase :close="close" title="New Task">
+  <ModalBase :close="close" :title="newTask.title || 'New Task'">
     <form class="form" @submit.prevent="submit">
       <label class="label" for="title">Title:</label>
       <input id="title" v-model="newTask.title" class="input" type="text" />
