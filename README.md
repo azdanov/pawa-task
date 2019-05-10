@@ -88,6 +88,7 @@ This app is hosted on [Heroku](https://heroku.com/home). Follow this [StackOverf
 - ~~Find a better way to add individual comments~~ (Extracted to TaskCommentController and TaskControllerService)
 - Find a way to make one-to-many and many-to-one relationship work. Right now when saving a Task that contains Comments no relationship is created. Comments have an empty foreign key.
 - Figure out which formats Data accepts.
+- Fix Docker.
 
 ### Frontend
 
