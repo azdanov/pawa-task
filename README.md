@@ -67,6 +67,10 @@ Just run `docker-composer up -d`.
 
 **WARNING:** Alpha version (app container may crash on start, just restart it)
 
+### Heroku
+
+This app is hosted on [Heroku](https://heroku.com/home). Follow this [StackOverflow Answer](https://stackoverflow.com/questions/33633243/connecting-to-heroku-postgres-from-spring-boot/49978310#49978310) to setup you own app.
+
 ## Commentary
 
 ### Backend
