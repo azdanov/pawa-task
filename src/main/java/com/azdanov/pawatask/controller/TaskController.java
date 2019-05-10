@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    @Autowired private TaskService taskService;
 
     @GetMapping("")
     public List<Task> findAll() {

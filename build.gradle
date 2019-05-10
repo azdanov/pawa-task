@@ -24,10 +24,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-processResources {
-    from('frontend/dist/') {
-        into 'static'
-    }
-}
+if (project.hasProperty('frontend')) {
 
-processResources.dependsOn('frontend:npm_run_build')
+    processResources {
+        from('frontend/dist/') {
+            into 'static'
+        }
+    }
+
+    processResources.dependsOn('frontend:npm_run_build')
+}

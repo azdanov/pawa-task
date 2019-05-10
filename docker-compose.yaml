@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 services:
   mysql:
     image: mysql:8
@@ -7,13 +7,23 @@ services:
       MYSQL_USER: pawa
       MYSQL_PASSWORD: pawa
       MYSQL_ROOT_PASSWORD: pawa
-
-  app:
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/usr/frontend
+      - /usr/front/node_modules
+    ports:
+      - 8000:8000
+    environment:
+      - PORT=8000
+      - NODE_ENV=development
+  backend:
     build: .
     ports:
-      - "8080:8080"
+      - 8080:8080
     depends_on:
       - mysql
+      - frontend
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql/pawatask?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
