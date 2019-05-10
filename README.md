@@ -65,7 +65,7 @@ A `Dockerfile` and `docker-compose.yaml` are available to try out the applicatio
 
 Just run `docker-composer up -d`.
 
-**WARNING:** Alpha version
+**WARNING:** Alpha version (app container may crash on start, just restart it)
 
 ## Commentary
 
