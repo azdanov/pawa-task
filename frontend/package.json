@@ -14,7 +14,8 @@
     "portal-vue": "^2.1.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "vue-timeago": "^5.1.2",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",

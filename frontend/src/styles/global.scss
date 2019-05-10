@@ -1,0 +1,25 @@
+@import "variables";
+
+html,
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 100vh;
+}
+
+input,
+form,
+textarea,
+[type="checkbox"],
+[type="text"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+p,
+a,
+button {
+  font-size: $font-size;
+}

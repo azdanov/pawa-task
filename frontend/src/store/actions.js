@@ -1,13 +1,68 @@
+import { parse } from "date-fns";
+
 export default {
   sortTasks({ state }) {
-    state.tasks.sort((a, b) => b.id - a.id);
+    state.tasks.sort((a, b) => a.id - b.id);
   },
-  async fetchTasks({ commit, dispatch }) {
-    const body = await fetch("/api/tasks");
-    const tasks = await body.json();
+  async getTasks({ commit, dispatch }) {
+    const response = await fetch("/api/tasks");
+    const tasks = await response.json();
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
 
-    commit("FETCH_TASKS", tasks);
+    tasks.forEach(task => (task.dueDate = parse(task.dueDate)));
+
+    commit("SAVE_TASKS", tasks);
     dispatch("sortTasks");
+  },
+  async saveTask({ commit, dispatch }, task) {
+    const response = await fetch(`/api/tasks`, {
+      method: "post",
+      body: JSON.stringify(task),
+      headers: { "Content-Type": "application/json" }
+    });
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
+
+    const taskNew = await response.json();
+    commit("UPDATE_TASK", taskNew);
+    dispatch("sortTasks");
+  },
+  async updateTask({ commit, dispatch }, task) {
+    const response = await fetch(`/api/tasks`, {
+      method: "put",
+      body: JSON.stringify(task),
+      headers: { "Content-Type": "application/json" }
+    });
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
+
+    const taskNew = await response.json();
+    commit("UPDATE_TASK", taskNew);
+    dispatch("sortTasks");
+  },
+  async deleteTask({ dispatch }, taskId) {
+    const response = await fetch(`/api/tasks/${taskId}`, {
+      method: "delete"
+    });
+
+    if (!response.ok) {
+      console.error(response);
+      return;
+    }
+
+    dispatch("getTasks");
+  },
+  async completeTask({ dispatch }, task) {
+    task.status = !task.status;
+
+    dispatch("updateTask", task);
   },
   async saveComment({ commit, dispatch }, { taskId, comment }) {
     const response = await fetch(`/api/tasks/${taskId}/comments`, {
@@ -17,6 +72,7 @@ export default {
     });
 
     if (!response.ok) {
+      console.error(response);
       return;
     }
 
@@ -32,6 +88,7 @@ export default {
     });
 
     if (!response.ok) {
+      console.error(response);
       return;
     }
 
@@ -45,50 +102,10 @@ export default {
     });
 
     if (!response.ok) {
+      console.error(response);
       return;
     }
 
-    dispatch("fetchTasks");
-    dispatch("sortTasks");
-  },
-  async saveTask({ commit, dispatch }, task) {
-    const response = await fetch(`/api/tasks`, {
-      method: "post",
-      body: JSON.stringify(task),
-      headers: { "Content-Type": "application/json" }
-    });
-    if (!response.ok) {
-      return;
-    }
-
-    const taskNew = await response.json();
-    commit("UPDATE_TASK", taskNew);
-    dispatch("sortTasks");
-  },
-  async updateTask({ commit, dispatch }, task) {
-    const response = await fetch(`/api/tasks`, {
-      method: "put",
-      body: JSON.stringify(task),
-      headers: { "Content-Type": "application/json" }
-    });
-    if (!response.ok) {
-      return;
-    }
-
-    const taskNew = await response.json();
-    commit("UPDATE_TASK", taskNew);
-    dispatch("sortTasks");
-  },
-  async deleteTask({ dispatch }, taskId) {
-    const response = await fetch(`/api/tasks/${taskId}`, {
-      method: "delete"
-    });
-
-    if (!response.ok) {
-      return;
-    }
-
-    dispatch("fetchTasks");
-    dispatch("sortTasks");
+    dispatch("getTasks");
   }
 };

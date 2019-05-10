@@ -1,83 +1,126 @@
 <template>
-  <div class="tasks">
-    <Portal v-if="openModal" to="modal">
-      <TaskModal :close="() => (openModal = false)"></TaskModal>
+  <ul class="list">
+    <Portal v-if="openEditModal" to="modal">
+      <TaskModal
+        :edit="true"
+        :close="() => (openEditModal = false)"
+        :task="tasks[selectedTask]"
+      ></TaskModal>
     </Portal>
-    <div class="box">
-      <button class="link add" @click.stop="addTask">Add Task</button>
-      <Task
-        v-for="task in tasks"
-        :key="task.id"
-        :open="open[task.id]"
-        :task="task"
-        @toggle="toggle"
-      ></Task>
-    </div>
-  </div>
+    <Portal v-if="openShowModal" to="modal">
+      <CommentModal
+        :edit="true"
+        :close="() => (openShowModal = false)"
+        :task="tasks[selectedTask]"
+        :action="{
+          title: 'Edit task',
+          callback: () => {
+            openShowModal = false;
+            openEditModal = true;
+          }
+        }"
+      ></CommentModal>
+    </Portal>
+    <li v-for="(task, index) in tasks" :key="task.id" class="task">
+      <Checkbox
+        v-model="task.status"
+        :name="task.id"
+        :on-checked="() => toggleStatus(task)"
+        >{{ task.title }}</Checkbox
+      >
+      <div class="panel">
+        <img class="icon" src="../assets/calendar.png" alt="Calendar" />
+        <span class="date">{{ task.dueDate | date }}</span>
+        <Button @click.native.prevent="() => openModal('show', index)"
+          ><img class="icon" src="../assets/speech-bubble.png" alt="Speech Icon"
+        /></Button>
+        <Button @click.native.prevent="() => openModal('edit', index)"
+          ><img class="icon" src="../assets/pencil.png" alt="Pencil"
+        /></Button>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script>
-import Task from "@/components/Task";
-import TaskModal from "@/components/Modal/TaskModal";
+import { mapActions } from "vuex";
+import Button from "../components/Button";
+import TaskModal from "../components/Modal/TaskModal";
+import Checkbox from "../components/Checkbox";
+import CommentModal from "@/components/Modal/CommentModal";
 
 export default {
-  name: "TaskList",
-  components: { TaskModal, Task },
+  components: { CommentModal, Checkbox, Button, TaskModal },
   props: { tasks: { type: Array, required: true } },
   data: function() {
-    return { open: {}, openModal: false };
-  },
-  created() {
-    this.tasks.forEach(({ id }) => {
-      this.$set(this.open, id, false);
-    });
+    return {
+      openEditModal: false,
+      openShowModal: false,
+      selectedTask: 0
+    };
   },
   methods: {
-    addTask() {
-      this.openModal = true;
+    ...mapActions(["completeTask"]),
+    toggleStatus(task) {
+      this.completeTask(task);
     },
-    toggle(id) {
-      this.$set(this.open, id, !this.open[id]);
+    openModal(type, index) {
+      if (type === "show") {
+        this.openShowModal = true;
+      } else {
+        this.openEditModal = true;
+      }
+      this.selectedTask = index;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "../styles/variables";
-
-.tasks {
-  margin: 0 auto 3rem;
-
-  @media (min-width: 768px) {
-    & {
-      width: 100%;
-    }
-  }
-
-  @media (min-width: 992px) {
-    & {
-      width: 80%;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    & {
-      width: 70%;
-    }
-  }
+.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
-
-.box {
-  box-shadow: 0 2px 4px 0 rgba($gray-900, 0.2),
-    0 25px 50px 0 rgba($gray-900, 0.1);
+.task {
+  display: flex;
+  border-bottom: 1px solid $gray;
+  padding: 0.6rem 0;
   position: relative;
-}
+  justify-content: space-between;
+  align-items: center;
 
-.add {
-  font-size: $text-sm;
-  position: absolute;
-  top: -1.3rem;
-  right: 1rem;
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+.panel {
+  align-items: center;
+  display: flex;
+}
+.icon {
+  height: 1.2rem;
+  width: 1.2rem;
+}
+.date {
+  font-size: $font-size;
+  margin: 0 1rem 0 0.4rem;
+}
+.button {
+  margin: 0 0.3rem 0.1rem;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    height: 0.9rem;
+    width: 0.9rem;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 </style>

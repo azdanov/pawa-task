@@ -1,60 +1,56 @@
 <template>
-  <ModalBase :close="close">
-    <Form :on-submit="submit">
-      <input :value="newComment.id" name="id" type="hidden" />
-      <input :value="newComment.task_id" name="task_id" type="hidden" />
-      <Input v-model="newComment.description" label="Comment" type="textarea" />
-      <div class="actions">
-        <button v-if="edit" class="link focus remove" @click.prevent="remove">
-          Remove
-        </button>
-        <Button>Submit</Button>
-      </div>
-    </Form>
+  <ModalBase :close="close" :title="task.title" :action="action">
+    <p class="description">{{ task.description }}</p>
+    <div class="meta">
+      <p><span class="bold">Date:</span> {{ task.dueDate | date }}</p>
+      <p>
+        <span class="bold">Priority:</span> {{ task.priority | capitalize }}
+      </p>
+    </div>
+    <Comments :comments="task.comments"></Comments>
+    <form class="form" @submit.prevent="submit">
+      <input
+        v-model="comment"
+        class="input"
+        type="text"
+        placeholder="Write a comment..."
+      />
+      <Button class="button">Add&nbsp;comment</Button>
+    </form>
   </ModalBase>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import ModalBase from "@/components/Modal/BaseModal";
 import Button from "@/components/Button";
-import ModalBase from "@/components/Modal/ModalBase";
-import Form from "@/components/Form/Form";
-import Input from "@/components/Form/Input";
+import Comments from "@/components/Comments";
 
 export default {
   name: "CommentModal",
-  components: { Input, Form, ModalBase, Button },
+  components: { Comments, Button, ModalBase },
   props: {
-    edit: { type: Boolean, required: false, default: false },
+    task: { type: Object, required: true },
     close: { type: Function, required: true },
-    taskId: { type: Number, required: true },
-    comment: {
+    action: {
       type: Object,
       required: false,
-      default: () => ({ id: 0, description: "", task_id: 0 })
+      default: () => ({ title: "", callback: () => {} })
     }
   },
   data: function() {
     return {
-      newComment: null
+      comment: ""
     };
   },
-  created() {
-    this.newComment = Object.assign({}, this.newComment, { ...this.comment });
-  },
   methods: {
-    ...mapActions(["saveComment", "updateComment", "deleteComment"]),
-    remove() {
-      this.deleteComment(this.newComment.id);
-      this.close();
-    },
+    ...mapActions(["saveComment"]),
     submit() {
-      if (this.edit) {
-        this.updateComment(this.newComment);
-      } else {
-        this.saveComment({ taskId: this.taskId, comment: this.newComment });
-      }
-      this.close();
+      this.saveComment({
+        taskId: this.task.id,
+        comment: { text: this.comment, date: new Date() }
+      });
+      this.comment = "";
     }
   }
 };
@@ -62,13 +58,46 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
-.actions {
-  width: 100%;
+
+.description {
+  margin-top: 1rem;
+}
+.meta {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid $gray;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
 }
-.remove {
-  font-size: $text-sm;
-  color: $gray-800;
+.bold {
+  font-weight: bold;
+}
+
+.form {
+  border-top: 1px solid $gray;
+  background-color: $gray-lightest;
+  margin: 1.5rem -1rem -1rem -1rem;
+  padding: 1.2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .input {
+    display: inline-block;
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid $gray;
+    font-size: $font-size;
+    margin: 0 0.6rem 0 0;
+    font-family: initial;
+
+    &::placeholder {
+      color: $gray;
+    }
+  }
+
+  .button {
+    border: 1px solid $orange;
+  }
 }
 </style>

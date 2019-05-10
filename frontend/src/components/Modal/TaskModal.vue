@@ -1,41 +1,85 @@
 <template>
-  <ModalBase :close="close">
-    <Form :on-submit="submit">
-      <input :value="newTask.id" name="id" type="hidden" />
-      <Input v-model="newTask.title" label="Title" type="text" />
-      <Input
+  <ModalBase :close="close" :title="newTask.title || 'New Task'">
+    <form class="form" @submit.prevent="submit">
+      <label class="label" for="title">Title:</label>
+      <input id="title" v-model="newTask.title" class="input" type="text" />
+
+      <label class="label" for="description">Description:</label>
+      <textarea
+        id="description"
         v-model="newTask.description"
-        label="Description"
-        type="textarea"
-      />
-      <Select v-model="newTask.priority" :choices="priority" label="Priority" />
-      <DateTime v-model="newTask.dueDate" label="Due Date" />
-      <div :class="[edit ? 'footer--edit' : 'footer']">
-        <Checkbox v-model="newTask.status" label="Completed" />
-        <div :class="[edit ? 'actions' : 'actions--add']">
-          <button v-if="edit" class="link focus remove" @click.prevent="remove">
-            Remove
-          </button>
-          <Button class="button">Submit</Button>
-        </div>
+        class="description"
+        name="description"
+        rows="4"
+      ></textarea>
+
+      <label class="label" for="date">Set due date:</label>
+      <div class="date">
+        <input
+          id="date"
+          v-model="date.day"
+          class="input"
+          type="number"
+          placeholder="DD"
+          min="1"
+          max="31"
+          name="day"
+        />
+        <input
+          v-model="date.month"
+          class="input"
+          type="number"
+          placeholder="MM"
+          min="1"
+          max="12"
+          name="month"
+        />
+        <input
+          v-model="date.year"
+          class="input"
+          type="number"
+          placeholder="AAAA"
+          :min="currentYear"
+          :max="currentYear + 10"
+          name="year"
+        />
       </div>
-    </Form>
+
+      <label class="label" for="priority">Priority:</label>
+      <select id="priority" v-model="newTask.priority" class="priority">
+        <option v-for="priority in priorities" :key="priority" :value="priority"
+          >{{ priority | capitalize }}
+        </option>
+      </select>
+
+      <label class="label" for="comments">Comments:</label>
+      <Comments
+        id="comments"
+        class="comments"
+        :comments="task.comments"
+        :edit="true"
+      ></Comments>
+
+      <footer :class="['footer', edit ? '' : 'footer--single']">
+        <Button v-if="edit" class="link" @click.native.prevent="remove"
+          >Remove task
+        </Button>
+        <Button class="button">{{ edit ? "Edit" : "Add a new" }} task</Button>
+      </footer>
+    </form>
   </ModalBase>
 </template>
 
 <script>
+import { getDate, getMonth, getYear } from "date-fns";
 import { mapActions } from "vuex";
+import ModalBase from "./BaseModal";
 import Button from "@/components/Button";
-import ModalBase from "@/components/Modal/ModalBase";
-import Form from "@/components/Form/Form";
-import Input from "@/components/Form/Input";
-import Select from "@/components/Form/Select";
-import Checkbox from "@/components/Form/Checkbox";
-import DateTime from "@/components/Form/DateTime";
+import Comments from "@/components/Comments";
 
 export default {
   name: "TaskModal",
-  components: { DateTime, Checkbox, Input, Form, ModalBase, Button, Select },
+  components: { Comments, Button, ModalBase },
   props: {
     close: { type: Function, required: true },
     edit: { type: Boolean, required: false, default: false },
@@ -48,18 +92,43 @@ export default {
         description: "",
         priority: "",
         status: false,
-        dueDate: ""
+        dueDate: "",
+        comments: []
       })
     }
   },
   data: function() {
     return {
-      priority: ["LOW", "NORMAL", "HIGH"],
+      priorities: ["low", "normal", "high"],
+      date: { day: "", month: "", year: "" },
       newTask: null
     };
   },
+  computed: {
+    currentYear() {
+      return new Date().getFullYear();
+    }
+  },
   created() {
     this.newTask = Object.assign({}, this.newTask, { ...this.task });
+
+    let date;
+
+    if (this.edit) {
+      date = {
+        year: getYear(this.task.dueDate),
+        month: getMonth(this.task.dueDate) + 1,
+        day: getDate(this.task.dueDate)
+      };
+    } else {
+      date = {
+        year: "",
+        month: "",
+        day: ""
+      };
+    }
+
+    this.date = Object.assign({}, this.date, date);
   },
   methods: {
     ...mapActions(["saveTask", "updateTask", "deleteTask"]),
@@ -72,6 +141,9 @@ export default {
       this.close();
     },
     submit() {
+      const { year, month, day } = this.date;
+      this.newTask.dueDate = new Date(year, month - 1, day);
+
       if (this.edit) {
         this.updateTask(this.newTask);
       } else {
@@ -85,41 +157,104 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
+@import "../../styles/common";
 
-.label {
-  font-weight: 300;
-  font-size: 1.5rem;
-  text-align: center;
-  color: $gray-800;
+.form {
+  margin-top: 1.3rem;
+  color: $gray-darker;
 }
 
-.actions {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  margin-top: 1rem;
+.label {
+  margin: 0.2rem 0;
+  display: inline-block;
 
-  &--add {
+  &:first-child {
     margin-top: 0;
   }
+}
+
+.comments,
+.description,
+.input {
+  display: block;
+  padding: 0.4rem;
+  margin: 0;
+  border: 1px solid $gray;
+  font-size: $font-size;
+  font-family: initial;
+}
+
+.date {
+  display: flex;
+  width: 60%;
+
+  .input {
+    margin: 0 0.6rem 0 0;
+    text-align: center;
+    font-family: initial;
+
+    &::placeholder {
+      color: $gray;
+    }
+
+    &:nth-child(1) {
+      width: 30%;
+    }
+
+    &:nth-child(2) {
+      width: 30%;
+    }
+
+    &:nth-child(3) {
+      width: 40%;
+      margin: 0;
+    }
+  }
+}
+
+.priority {
+  -webkit-appearance: menulist-button;
+  height: 30px;
+  display: block;
+  width: 60%;
+  font-size: $font-size;
+  font-family: initial;
+}
+
+.input,
+.description,
+.footer {
+  width: 100%;
+}
+
+.comments,
+.description,
+.input {
+  border: 1px solid $gray;
+}
+
+.comments,
+.description,
+.input,
+.date,
+.priority {
+  margin-bottom: 0.7rem;
 }
 
 .footer {
-  width: 100%;
   display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
+  justify-content: space-between;
 
-  &--edit {
-    margin-top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  &--single {
+    justify-content: flex-end;
+  }
+
+  & .button {
+    margin-bottom: 0;
   }
 }
 
-.remove {
-  font-size: $text-sm;
+.description {
+  resize: none;
 }
 </style>

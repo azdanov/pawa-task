@@ -1,7 +1,5 @@
 <template>
-  <button class="focus button">
-    <slot></slot>
-  </button>
+  <button class="button"><slot></slot></button>
 </template>
 
 <script>
@@ -10,24 +8,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "../styles/variables";
-
 .button {
-  background-color: $white;
-  border: 1px solid $gray-100;
+  background-color: $orange;
+  font-family: initial;
+  border: none;
   display: inline-block;
   cursor: pointer;
-  color: $gray-700;
-  font-size: 15px;
+  color: $white;
+  font-size: $font-size;
   font-weight: bold;
-  padding: 6px 24px;
+  padding: 0.4rem 0.8rem;
   text-decoration: none;
-  text-transform: uppercase;
-
-  &:hover {
-    background-color: $gray-100;
-    color: $gray-800;
-  }
 }
 </style>

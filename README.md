@@ -17,6 +17,8 @@
     </tbody>
 </table>
 
+Check out an alternative version at [azdanov/pawa-task/tree/own-design](https://github.com/azdanov/pawa-task/tree/own-design).
+
 ## How To
 
 - To access the application go to: http://localhost:8080/.
