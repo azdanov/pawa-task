@@ -59,6 +59,14 @@ It is possible to use Hot Reloading with Vue.js. First start the Spring Boot app
 npm run serve
 ```
 
+### Docker
+
+A `Dockerfile` and `docker-compose.yaml` are available to try out the application without messing around with any settings.
+
+Just run `docker-composer up -d`.
+
+**WARNING:** Alpha version
+
 ## Commentary
 
 ### Backend
