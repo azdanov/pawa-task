@@ -41,6 +41,12 @@ cd pawa-task
 # src/main/resources/application.properties
 
 ./gradlew bootRun
+
+cd frontend
+
+npm run serve
+
+# Access the app on http://localhost:8080/
 ```
 
 ### Build
@@ -48,17 +54,10 @@ cd pawa-task
 ```bash
 ./gradlew clean
 
-./gradlew build
+# Note the -P flag to build the client code
+./gradlew build -x test -Pfrontend
 
 java -jar ./build/libs/pawa-task-1.0.0-SNAPSHOT.jar
-```
-
-### Develop
-
-It is possible to use Hot Reloading with Vue.js. First start the Spring Boot app and then inside `frontend` run:
-
-```bash
-npm run serve
 ```
 
 ### Docker
