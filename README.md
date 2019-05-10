@@ -64,9 +64,9 @@ java -jar ./build/libs/pawa-task-1.0.0-SNAPSHOT.jar
 
 A `Dockerfile` and `docker-compose.yaml` are available to try out the application without messing around with any settings.
 
-Just run `docker-composer up -d`.
+Just run `docker-composer up -d`. The client should be on `http://localhost:8000/` and the api on `http://localhost:8080/api/`.
 
-**WARNING:** Alpha version (app container may crash on start, just restart it)
+**WARNING:** Beta version (works on my machine).
 
 ### Heroku
 
