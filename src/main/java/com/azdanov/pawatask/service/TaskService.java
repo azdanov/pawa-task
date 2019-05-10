@@ -13,8 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class TaskService implements TaskServiceInterface {
 
-    @Autowired
-    private TaskRepository taskRepository;
+    @Autowired private TaskRepository taskRepository;
 
     @Override
     @Transactional

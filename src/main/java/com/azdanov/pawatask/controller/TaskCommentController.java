@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tasks")
 public class TaskCommentController {
 
-    @Autowired
-    private TaskCommentService taskCommentService;
+    @Autowired private TaskCommentService taskCommentService;
 
     @PostMapping("/{taskId}/comments")
     public Task addComment(@PathVariable int taskId, @RequestBody Comment comment) {
