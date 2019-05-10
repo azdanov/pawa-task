@@ -2,6 +2,8 @@
 
 <small>A simple todo list application that keeps track of your time.</small>
 
+Check out the [Live Version](https://pawatask-spring.herokuapp.com/) hosted on Heroku.
+
 <table>
     <thead>
         <tr>
