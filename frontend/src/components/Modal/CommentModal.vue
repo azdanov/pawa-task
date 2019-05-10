@@ -7,18 +7,7 @@
         <span class="bold">Priority:</span> {{ task.priority | capitalize }}
       </p>
     </div>
-    <div class="comments">
-      <div
-        v-for="taskComment in task.comments"
-        :key="taskComment.id"
-        class="comment"
-      >
-        <small class="date"
-          ><timeago :datetime="taskComment.date"></timeago
-        ></small>
-        <p class="text">{{ taskComment.text }}</p>
-      </div>
-    </div>
+    <Comments :comments="task.comments"></Comments>
     <form class="form" @submit.prevent="submit">
       <input
         v-model="comment"
@@ -35,10 +24,11 @@
 import { mapActions } from "vuex";
 import ModalBase from "@/components/Modal/BaseModal";
 import Button from "@/components/Button";
+import Comments from "@/components/Comments";
 
 export default {
   name: "CommentModal",
-  components: { Button, ModalBase },
+  components: { Comments, Button, ModalBase },
   props: {
     task: { type: Object, required: true },
     close: { type: Function, required: true },
@@ -82,27 +72,11 @@ export default {
 .bold {
   font-weight: bold;
 }
-.comments {
-  max-height: 200px;
-  overflow: auto;
-  .comment {
-    padding-bottom: 1.5rem;
-    .text,
-    .date {
-      margin: 0;
-    }
-    .date {
-      display: inline-block;
-      margin-bottom: 0.2rem;
-      color: darken($gray, 20%);
-    }
-  }
-}
 
 .form {
   border-top: 1px solid $gray;
   background-color: $gray-lightest;
-  margin: 0 -1rem -1rem -1rem;
+  margin: 1.5rem -1rem -1rem -1rem;
   padding: 1.2rem 1rem;
   display: flex;
   justify-content: space-between;

@@ -53,13 +53,12 @@
       </select>
 
       <label class="label" for="comments">Comments:</label>
-      <textarea
+      <Comments
         id="comments"
         class="comments"
-        rows="3"
-        disabled
-        placeholder="None available"
-      ></textarea>
+        :comments="task.comments"
+        :edit="true"
+      ></Comments>
 
       <footer :class="['footer', edit ? '' : 'footer--single']">
         <Button v-if="edit" class="link" @click.native.prevent="remove"
@@ -76,10 +75,11 @@ import { getDate, getMonth, getYear } from "date-fns";
 import { mapActions } from "vuex";
 import ModalBase from "./BaseModal";
 import Button from "@/components/Button";
+import Comments from "@/components/Comments";
 
 export default {
   name: "TaskModal",
-  components: { Button, ModalBase },
+  components: { Comments, Button, ModalBase },
   props: {
     close: { type: Function, required: true },
     edit: { type: Boolean, required: false, default: false },
@@ -176,7 +176,7 @@ export default {
 .comments,
 .description,
 .input {
-  display: inline-block;
+  display: block;
   padding: 0.4rem;
   margin: 0;
   border: 1px solid $gray;
@@ -223,22 +223,21 @@ export default {
 
 .input,
 .description,
-.footer,
-.comments {
+.footer {
   width: 100%;
 }
 
+.comments,
 .description,
-.input,
-.comments {
+.input {
   border: 1px solid $gray;
 }
 
+.comments,
 .description,
 .input,
 .date,
-.priority,
-.comments {
+.priority {
   margin-bottom: 0.7rem;
 }
 
@@ -255,8 +254,7 @@ export default {
   }
 }
 
-.description,
-.comments {
+.description {
   resize: none;
 }
 </style>

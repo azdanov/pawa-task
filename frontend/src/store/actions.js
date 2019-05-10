@@ -79,5 +79,16 @@ export default {
     const task = await response.json();
     commit("UPDATE_TASK", task);
     dispatch("sortTasks");
+  },
+  async deleteComment({ dispatch }, commentId) {
+    const response = await fetch(`/api/comments/${commentId}`, {
+      method: "delete"
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    dispatch("getTasks");
   }
 };
