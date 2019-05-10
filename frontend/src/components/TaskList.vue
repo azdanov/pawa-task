@@ -1,27 +1,27 @@
 <template>
   <ul class="list">
-    <li v-for="task in tasks" :key="task.id" class="task">
-      <Portal v-if="openEditModal" to="modal">
-        <TaskModal
-          :edit="true"
-          :close="() => (openEditModal = false)"
-          :task="task"
-        ></TaskModal>
-      </Portal>
-      <Portal v-if="openShowModal" to="modal">
-        <CommentModal
-          :edit="true"
-          :close="() => (openShowModal = false)"
-          :task="task"
-          :action="{
-            title: 'edit task',
-            callback: () => {
-              openShowModal = false;
-              openEditModal = true;
-            }
-          }"
-        ></CommentModal>
-      </Portal>
+    <Portal v-if="openEditModal" to="modal">
+      <TaskModal
+        :edit="true"
+        :close="() => (openEditModal = false)"
+        :task="tasks[selectedTask]"
+      ></TaskModal>
+    </Portal>
+    <Portal v-if="openShowModal" to="modal">
+      <CommentModal
+        :edit="true"
+        :close="() => (openShowModal = false)"
+        :task="tasks[selectedTask]"
+        :action="{
+          title: 'edit task',
+          callback: () => {
+            openShowModal = false;
+            openEditModal = true;
+          }
+        }"
+      ></CommentModal>
+    </Portal>
+    <li v-for="(task, index) in tasks" :key="task.id" class="task">
       <Checkbox
         v-model="task.status"
         :name="task.id"
@@ -31,10 +31,10 @@
       <div class="panel">
         <img class="icon" src="../assets/calendar.png" alt="Calendar" />
         <span class="date">{{ task.dueDate | date }}</span>
-        <Button @click.native.prevent="openShowModal = true"
+        <Button @click.native.prevent="() => openModal('show', index)"
           ><img class="icon" src="../assets/speech-bubble.png" alt="Speech Icon"
         /></Button>
-        <Button @click.native.prevent="openEditModal = true"
+        <Button @click.native.prevent="() => openModal('edit', index)"
           ><img class="icon" src="../assets/pencil.png" alt="Pencil"
         /></Button>
       </div>
@@ -55,13 +55,22 @@ export default {
   data: function() {
     return {
       openEditModal: false,
-      openShowModal: false
+      openShowModal: false,
+      selectedTask: 0
     };
   },
   methods: {
     ...mapActions(["completeTask"]),
     toggleStatus(task) {
       this.completeTask(task);
+    },
+    openModal(type, index) {
+      if (type === "show") {
+        this.openShowModal = true;
+      } else {
+        this.openEditModal = true;
+      }
+      this.selectedTask = index;
     }
   }
 };

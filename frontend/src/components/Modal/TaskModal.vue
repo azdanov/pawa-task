@@ -47,21 +47,24 @@
 
       <label class="label" for="priority">Priority:</label>
       <select id="priority" v-model="newTask.priority" class="priority">
-        <option
-          v-for="priority in priorities"
-          :key="priority"
-          :value="priority"
-          >{{ priority | capitalize }}</option
-        >
+        <option v-for="priority in priorities" :key="priority" :value="priority"
+          >{{ priority | capitalize }}
+        </option>
       </select>
 
       <label class="label" for="comments">Comments:</label>
-      <textarea id="comments" class="comments" rows="5" disabled></textarea>
+      <textarea
+        id="comments"
+        class="comments"
+        rows="3"
+        disabled
+        placeholder="None available"
+      ></textarea>
 
       <footer :class="['footer', edit ? '' : 'footer--single']">
         <Button v-if="edit" class="link" @click.native.prevent="remove"
-          >Remove task</Button
-        >
+          >Remove task
+        </Button>
         <Button class="button">{{ edit ? "Edit" : "Add a new" }} task</Button>
       </footer>
     </form>
@@ -69,7 +72,7 @@
 </template>
 
 <script>
-import { getYear, getMonth, getDate } from "date-fns";
+import { getDate, getMonth, getYear } from "date-fns";
 import { mapActions } from "vuex";
 import ModalBase from "./BaseModal";
 import Button from "@/components/Button";
@@ -170,14 +173,15 @@ export default {
   }
 }
 
+.comments,
 .description,
 .input {
   display: inline-block;
-  width: 100%;
   padding: 0.4rem;
   margin: 0;
   border: 1px solid $gray;
   font-size: $font-size;
+  font-family: initial;
 }
 
 .date {
@@ -196,9 +200,11 @@ export default {
     &:nth-child(1) {
       width: 25%;
     }
+
     &:nth-child(2) {
       width: 25%;
     }
+
     &:nth-child(3) {
       width: 50%;
       margin: 0;
@@ -215,6 +221,9 @@ export default {
   font-family: initial;
 }
 
+.input,
+.description,
+.footer,
 .comments {
   width: 100%;
 }
@@ -234,7 +243,6 @@ export default {
 }
 
 .footer {
-  width: 100%;
   display: flex;
   justify-content: space-between;
 
