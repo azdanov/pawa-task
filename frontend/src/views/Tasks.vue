@@ -63,6 +63,7 @@ export default {
 .title {
   margin: 0;
   font-size: 1.5rem;
+  line-height: 1px;
 }
 .header {
   display: flex;

@@ -13,7 +13,7 @@
         :close="() => (openShowModal = false)"
         :task="tasks[selectedTask]"
         :action="{
-          title: 'edit task',
+          title: 'Edit task',
           callback: () => {
             openShowModal = false;
             openEditModal = true;

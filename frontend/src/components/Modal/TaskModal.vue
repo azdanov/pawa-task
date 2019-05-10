@@ -198,15 +198,15 @@ export default {
     }
 
     &:nth-child(1) {
-      width: 25%;
+      width: 30%;
     }
 
     &:nth-child(2) {
-      width: 25%;
+      width: 30%;
     }
 
     &:nth-child(3) {
-      width: 50%;
+      width: 40%;
       margin: 0;
     }
   }

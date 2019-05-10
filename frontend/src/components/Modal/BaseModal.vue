@@ -69,12 +69,11 @@ export default {
   left: 50%;
   border: 1px solid $gray;
   padding: 1rem;
-  width: 400px;
-  margin-left: -200px;
+  width: 90%;
+  transform: translate(-50%, 0);
 
-  @media (min-width: 600px) {
+  @media (min-width: 640px) {
     width: 500px;
-    margin-left: -250px;
   }
 }
 
@@ -88,9 +87,11 @@ export default {
     align-items: center;
 
     .action {
+      white-space: nowrap;
       display: inline-block;
       margin-left: 0.8rem;
       margin-top: 0.2rem;
+      margin-right: 1rem;
     }
   }
 
@@ -100,6 +101,11 @@ export default {
     width: 1.2rem;
     height: 1.2rem;
     padding: 0;
+    margin-top: 0.1rem;
+
+    @media (min-width: 640px) {
+      margin-top: 0;
+    }
   }
 }
 </style>
