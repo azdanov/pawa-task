@@ -98,6 +98,12 @@ export default {
         this.$v.comment.$touch();
         return;
       }
+
+      if (!this.$v.editingComment.$dirty) {
+        this.editingComment = null;
+        return;
+      }
+
       this.updateComment(this.editingComment);
       this.$set(this.comments[index], "text", this.editingComment.text);
       this.editingComment = null;
