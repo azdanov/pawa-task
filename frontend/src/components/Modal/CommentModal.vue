@@ -11,11 +11,11 @@
     <form class="form" @submit.prevent="submit">
       <input
         v-model.trim="$v.comment.$model"
-        :class="{ input: true, 'input--error': commentInvalid }"
+        :class="{ input: true, 'input--error': $v.comment.$error }"
         type="text"
         placeholder="Write a comment..."
       />
-      <Button class="button" :disabled="commentInvalid"
+      <Button class="button" :disabled="$v.comment.$error"
         >Add&nbsp;comment</Button
       >
     </form>
@@ -51,15 +51,10 @@ export default {
       required
     }
   },
-  computed: {
-    commentInvalid() {
-      return this.$v.comment.$invalid && this.$v.comment.$dirty;
-    }
-  },
   methods: {
     ...mapActions(["saveComment"]),
     submit() {
-      if (this.$v.comment.$invalid) {
+      if (this.$v.comment.$error) {
         this.$v.comment.$touch();
         return;
       }
