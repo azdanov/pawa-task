@@ -1,24 +1,42 @@
 <template>
-  <ModalBase :close="close" :title="newTask.title || 'New Task'">
+  <ModalBase :close="close" :title="task.title || 'New Task'">
     <form class="form" @submit.prevent="submit">
       <label class="label" for="title">Title:</label>
-      <input id="title" v-model="newTask.title" class="input" type="text" />
+      <input
+        id="title"
+        v-model.trim="$v.newTask.title.$model"
+        :class="{
+          input: true,
+          'input--error': $v.newTask.title.$error
+        }"
+        :placeholder="$v.newTask.title.$error ? 'Enter a title' : ''"
+        type="text"
+      />
 
       <label class="label" for="description">Description:</label>
       <textarea
         id="description"
-        v-model="newTask.description"
-        class="description"
+        v-model.trim="$v.newTask.description.$model"
+        :class="{
+          description: true,
+          'description--error': $v.newTask.description.$error
+        }"
         name="description"
         rows="4"
+        :placeholder="
+          $v.newTask.description.$error ? 'Enter a description' : ''
+        "
       ></textarea>
 
       <label class="label" for="date">Set due date:</label>
       <div class="date">
         <input
           id="date"
-          v-model="date.day"
-          class="input"
+          v-model.number="$v.date.day.$model"
+          :class="{
+            input: true,
+            'input--error': $v.date.day.$error
+          }"
           type="number"
           placeholder="DD"
           min="1"
@@ -26,8 +44,11 @@
           name="day"
         />
         <input
-          v-model="date.month"
-          class="input"
+          v-model.number="$v.date.month.$model"
+          :class="{
+            input: true,
+            'input--error': $v.date.month.$error
+          }"
           type="number"
           placeholder="MM"
           min="1"
@@ -35,10 +56,13 @@
           name="month"
         />
         <input
-          v-model="date.year"
-          class="input"
+          v-model.number="$v.date.year.$model"
+          :class="{
+            input: true,
+            'input--error': $v.date.year.$error
+          }"
           type="number"
-          placeholder="AAAA"
+          placeholder="YYYY"
           :min="currentYear"
           :max="currentYear + 10"
           name="year"
@@ -46,7 +70,15 @@
       </div>
 
       <label class="label" for="priority">Priority:</label>
-      <select id="priority" v-model="newTask.priority" class="priority">
+      <select
+        id="priority"
+        v-model="$v.newTask.priority.$model"
+        :class="{
+          priority: true,
+          'priority--error': $v.newTask.priority.$error
+        }"
+      >
+        <option value="" disabled selected>Select priority</option>
         <option v-for="priority in priorities" :key="priority" :value="priority"
           >{{ priority | capitalize }}
         </option>
@@ -64,13 +96,16 @@
         <Button v-if="edit" class="link" @click.native.prevent="remove"
           >Remove task
         </Button>
-        <Button class="button">{{ edit ? "Edit" : "Add a new" }} task</Button>
+        <Button :class="{ button: true }" :disabled="$v.validationGroup.$error"
+          >{{ edit ? "Edit" : "Add a new" }} task</Button
+        >
       </footer>
     </form>
   </ModalBase>
 </template>
 
 <script>
+import required from "vuelidate/src/validators/required";
 import { getDate, getMonth, getYear } from "date-fns";
 import { mapActions } from "vuex";
 import ModalBase from "./BaseModal";
@@ -100,9 +135,22 @@ export default {
   data: function() {
     return {
       priorities: ["low", "normal", "high"],
-      date: { day: "", month: "", year: "" },
+      date: null,
       newTask: null
     };
+  },
+  validations: {
+    newTask: {
+      title: { required },
+      description: { required },
+      priority: { required }
+    },
+    date: {
+      day: { required },
+      month: { required },
+      year: { required }
+    },
+    validationGroup: ["newTask", "date"]
   },
   computed: {
     currentYear() {
@@ -141,6 +189,16 @@ export default {
       this.close();
     },
     submit() {
+      if (this.$v.validationGroup.$invalid) {
+        this.$v.validationGroup.$touch();
+        return;
+      }
+
+      if (!this.$v.validationGroup.$dirty) {
+        this.close();
+        return;
+      }
+
       const { year, month, day } = this.date;
       this.newTask.dueDate = new Date(year, month - 1, day);
 
@@ -182,6 +240,14 @@ export default {
   border: 1px solid $gray;
   font-size: $font-size;
   font-family: initial;
+
+  &--error {
+    border: 1px solid $orange;
+
+    &::placeholder {
+      color: $orange;
+    }
+  }
 }
 
 .date {
@@ -219,18 +285,17 @@ export default {
   width: 60%;
   font-size: $font-size;
   font-family: initial;
+
+  &--error {
+    color: $orange;
+    border: 1px solid $orange;
+  }
 }
 
 .input,
 .description,
 .footer {
   width: 100%;
-}
-
-.comments,
-.description,
-.input {
-  border: 1px solid $gray;
 }
 
 .comments,
