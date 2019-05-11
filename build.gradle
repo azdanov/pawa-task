@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.2.5'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
+    compile 'com.github.javafaker:javafaker:0.18'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
