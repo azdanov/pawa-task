@@ -16,7 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/comments")
 public class CommentController {
 
-    @Autowired private CommentService commentService;
+    private CommentService commentService;
+
+    @Autowired
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @PutMapping("")
     public Comment updateComment(@RequestBody Comment comment) {

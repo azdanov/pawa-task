@@ -17,14 +17,14 @@ public class ApiError {
         this.errors = errors;
     }
 
-    public ApiError(HttpStatus status, String message, String error) {
+    ApiError(HttpStatus status, String message, String error) {
         super();
         this.status = status;
         this.message = message;
         errors = Collections.singletonList(error);
     }
 
-    public HttpStatus getStatus() {
+    HttpStatus getStatus() {
         return status;
     }
 

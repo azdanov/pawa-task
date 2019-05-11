@@ -1,31 +1,10 @@
 package com.azdanov.pawatask.service;
 
 import com.azdanov.pawatask.domain.Comment;
-import com.azdanov.pawatask.repository.CommentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-@Service
-public class CommentService implements CommentServiceInterface {
+public interface CommentService {
 
-    @Autowired private CommentRepository commentRepository;
+    Comment update(Comment comment);
 
-    @Override
-    @Transactional
-    public Comment update(Comment comment) {
-        if (!commentRepository.existsById(comment.getId())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not updated");
-        }
-
-        return commentRepository.save(comment);
-    }
-
-    @Override
-    @Transactional
-    public void deleteById(int id) {
-        commentRepository.deleteById(id);
-    }
+    void deleteById(int id);
 }
