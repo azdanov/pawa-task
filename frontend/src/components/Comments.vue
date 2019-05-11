@@ -86,6 +86,9 @@ export default {
   methods: {
     ...mapActions(["deleteComment", "updateComment"]),
     removeComment(index) {
+      if (!window.confirm(`Remove this comment?`)) {
+        return;
+      }
       this.deleteComment(this.comments[index].id);
     },
     editComment(index) {

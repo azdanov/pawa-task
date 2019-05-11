@@ -67,6 +67,7 @@ export default {
         taskId: this.task.id,
         comment: { text: this.comment, date: new Date() }
       });
+      this.$v.comment.$reset();
       this.comment = "";
     }
   }
