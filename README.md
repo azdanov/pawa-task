@@ -66,7 +66,7 @@ A `Dockerfile` and `docker-compose.yaml` are available to try out the applicatio
 
 Just run `docker-composer up -d`. The client should be on `http://localhost:8000/` and the api on `http://localhost:8080/api/`.
 
-**WARNING:** Tomcat takes a while to start, so the client may throw some `500` errors at first.
+**WARNING:** Spring Boot takes a while to start, so the client may throw some `500` errors at first.
 
 ### Heroku
 
