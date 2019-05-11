@@ -31,7 +31,10 @@
       >
         <textarea
           v-model.trim="$v.editingComment.text.$model"
-          :class="{ textarea: true, 'textarea--error': commentInvalid }"
+          :class="{
+            textarea: true,
+            'textarea--error': $v.editingComment.text.$error
+          }"
           placeholder="Enter a comment"
         ></textarea>
         <Button
@@ -41,7 +44,7 @@
         </Button>
         <Button
           class="save"
-          :disabled="commentInvalid"
+          :disabled="$v.editingComment.text.$error"
           @click.native.prevent="() => saveComment(index)"
           >Save
         </Button>
@@ -75,14 +78,6 @@ export default {
       }
     }
   },
-  computed: {
-    commentInvalid() {
-      return (
-        this.$v.editingComment.text.$invalid &&
-        this.$v.editingComment.text.$dirty
-      );
-    }
-  },
   methods: {
     ...mapActions(["deleteComment", "updateComment"]),
     removeComment(index) {
@@ -99,7 +94,7 @@ export default {
       );
     },
     saveComment(index) {
-      if (this.$v.editingComment.text.$invalid) {
+      if (this.$v.editingComment.text.$error) {
         this.$v.comment.$touch();
         return;
       }
