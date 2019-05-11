@@ -2,11 +2,13 @@ import VueTimeago from "vue-timeago";
 import { format } from "date-fns";
 import Vue from "vue";
 import PortalVue from "portal-vue";
+import Vuelidate from "vuelidate";
 import App from "./App";
 import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
+Vue.use(Vuelidate);
 Vue.use(PortalVue);
 Vue.use(VueTimeago, {
   name: "Timeago",
