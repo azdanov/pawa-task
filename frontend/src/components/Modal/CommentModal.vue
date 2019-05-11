@@ -10,12 +10,14 @@
     <Comments :comments="task.comments"></Comments>
     <form class="form" @submit.prevent="submit">
       <input
-        v-model="comment"
-        class="input"
+        v-model.trim="$v.comment.$model"
+        :class="{ input: true, 'input--error': commentInvalid }"
         type="text"
         placeholder="Write a comment..."
       />
-      <Button class="button">Add&nbsp;comment</Button>
+      <Button class="button" :disabled="commentInvalid"
+        >Add&nbsp;comment</Button
+      >
     </form>
   </ModalBase>
 </template>
@@ -25,6 +27,7 @@ import { mapActions } from "vuex";
 import ModalBase from "@/components/Modal/BaseModal";
 import Button from "@/components/Button";
 import Comments from "@/components/Comments";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "CommentModal",
@@ -43,9 +46,23 @@ export default {
       comment: ""
     };
   },
+  validations: {
+    comment: {
+      required
+    }
+  },
+  computed: {
+    commentInvalid() {
+      return this.$v.comment.$invalid && this.$v.comment.$dirty;
+    }
+  },
   methods: {
     ...mapActions(["saveComment"]),
     submit() {
+      if (this.$v.comment.$invalid) {
+        this.$v.comment.$touch();
+        return;
+      }
       this.saveComment({
         taskId: this.task.id,
         comment: { text: this.comment, date: new Date() }
@@ -68,9 +85,9 @@ export default {
   border-bottom: 1px solid $gray;
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
-}
-.bold {
-  font-weight: bold;
+  .bold {
+    font-weight: bold;
+  }
 }
 
 .form {
@@ -94,10 +111,14 @@ export default {
     &::placeholder {
       color: $gray;
     }
-  }
 
-  .button {
-    border: 1px solid $orange;
+    &--error {
+      border: 1px solid $orange;
+
+      &::placeholder {
+        color: $orange;
+      }
+    }
   }
 }
 </style>
