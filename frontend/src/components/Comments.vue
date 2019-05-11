@@ -1,16 +1,16 @@
 <template>
-  <div class="comments">
+  <article class="comments">
     <p v-if="comments.length === 0" class="none">None available</p>
-    <div
+    <section
       v-for="(taskComment, index) in comments"
       v-else
       :key="taskComment.id"
       class="comment"
     >
       <div class="meta">
-        <small class="date"
-          ><timeago :datetime="taskComment.date"></timeago
-        ></small>
+        <small class="date">
+          <timeago :datetime="taskComment.date"></timeago>
+        </small>
         <div v-if="edit" class="actions">
           -
           <button
@@ -25,20 +25,37 @@
           </button>
         </div>
       </div>
-      <div v-if="editingComment === index" class="commentEdit">
-        <textarea v-model="taskComment.text" class="textarea"></textarea>
-        <Button class="save" @click.native.prevent="() => saveComment(index)"
-          >Save</Button
-        >
+      <div
+        v-if="editingComment && editingComment.id === taskComment.id"
+        class="commentEdit"
+      >
+        <textarea
+          v-model.trim="$v.editingComment.text.$model"
+          :class="{ textarea: true, 'textarea--error': commentInvalid }"
+          placeholder="Enter a comment"
+        ></textarea>
+        <Button
+          class="link cancel"
+          @click.native.prevent="editingComment = null"
+          >Cancel
+        </Button>
+        <Button
+          class="save"
+          :disabled="commentInvalid"
+          @click.native.prevent="() => saveComment(index)"
+          >Save
+        </Button>
       </div>
       <p v-else class="text">{{ taskComment.text }}</p>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import required from "vuelidate/src/validators/required";
 import Button from "@/components/Button";
+
 export default {
   name: "Comments",
   components: { Button },
@@ -51,16 +68,36 @@ export default {
       editingComment: null
     };
   },
+  validations: {
+    editingComment: {
+      text: {
+        required
+      }
+    }
+  },
+  computed: {
+    commentInvalid() {
+      return (
+        this.$v.editingComment.text.$invalid &&
+        this.$v.editingComment.text.$dirty
+      );
+    }
+  },
   methods: {
     ...mapActions(["deleteComment", "updateComment"]),
     removeComment(index) {
       this.deleteComment(this.comments[index].id);
     },
     editComment(index) {
-      this.editingComment = index;
+      this.editingComment = Object.assign(
+        {},
+        this.editingComment,
+        this.comments[index]
+      );
     },
     saveComment(index) {
-      this.updateComment(this.comments[index]);
+      this.updateComment(this.editingComment);
+      this.$set(this.comments[index], "text", this.editingComment.text);
       this.editingComment = null;
     }
   }
@@ -70,40 +107,50 @@ export default {
 <style scoped lang="scss">
 @import "../styles/variables";
 @import "../styles/common";
+
 .comments {
   max-height: 200px;
   overflow: auto;
 }
+
 .comment {
   padding-bottom: 1.5rem;
+
   &:last-child {
     padding-bottom: 0;
   }
 }
+
 .text,
 .date {
   margin: 0;
 }
+
 .date {
   display: inline-block;
   margin-bottom: 0.2rem;
   color: darken($gray, 20%);
 }
+
 .none {
   margin: 0;
   color: $gray;
 }
+
+.cancel,
 .save,
 .remove,
 .edit,
 .meta {
   font-size: small;
 }
+
 .commentEdit {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
+
 .textarea {
   width: 100%;
   border: 1px solid $gray;
@@ -112,10 +159,25 @@ export default {
   margin: 0;
   font-size: $font-size;
   font-family: initial;
+
+  &--error {
+    border: 1px solid $orange;
+
+    &::placeholder {
+      color: $orange;
+    }
+  }
 }
+
+.cancel,
 .save {
   margin-top: 0.5rem;
 }
+
+.cancel {
+  margin-right: 1rem;
+}
+
 .actions {
   display: inline-block;
   margin-left: 0.2rem;
