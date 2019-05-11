@@ -84,7 +84,7 @@ This app is hosted on [Heroku](https://heroku.com/home). Follow this [StackOverf
 - Add security layer and associate each user with own tasks.
 - Use Spring Rest Starter to remove boilerplate, similar to JpaRepositories.
 - ~~Have an easier way to develop on different platforms by using Docker.~~
-- Simpler way to develop sql schemas with migrations and seeding of the database with fake data.
+- ~~Simpler way to develop sql schemas with migrations and seeding of the database with fake data.~~
 - ~~Use Enum types for priority, e.g https://vladmihalcea.com/the-best-way-to-map-an-enum-type-with-jpa-and-hibernate/~~
 - ~~Find a better way to add individual comments~~ (Extracted to TaskCommentController and TaskControllerService)
 - Find a way to make one-to-many and many-to-one relationship work. Right now when saving a Task that contains Comments no relationship is created. Comments have an empty foreign key.
