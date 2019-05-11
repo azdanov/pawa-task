@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <router-view />
     <PortalTarget name="modal" @change="handleChange"></PortalTarget>
   </div>
@@ -35,10 +35,8 @@ export default {
 @import "styles/global";
 @import "styles/variables";
 
-p,
-a,
-h1,
-h2 {
-  color: $gray-darker;
+.app {
+  background: $gray-lightest;
+  min-height: 100%;
 }
 </style>

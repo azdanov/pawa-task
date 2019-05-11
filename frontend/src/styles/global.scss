@@ -6,7 +6,12 @@ body {
   -moz-osx-font-smoothing: auto;
   box-sizing: border-box;
   margin: 0;
-  min-height: 100vh;
+  padding: 0;
+  height: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 input,
@@ -14,7 +19,6 @@ form,
 textarea,
 [type="checkbox"],
 [type="text"] {
-  box-sizing: border-box;
   padding: 0;
 }
 
@@ -22,4 +26,11 @@ p,
 a,
 button {
   font-size: $font-size;
+}
+
+p,
+a,
+h1,
+h2 {
+  color: $gray-darker;
 }

@@ -46,8 +46,7 @@ export default {
 @import "../styles/common";
 
 .body {
-  background: $gray-lightest;
-  min-height: 100vh;
+  box-sizing: border-box;
   padding: 1.2rem;
 }
 .main {

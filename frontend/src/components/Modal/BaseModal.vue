@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="modal">
     <div class="overlay" @click="close()"></div>
-    <div ref="modal" :style="`margin-top: -${modalHeight / 2}px`" class="box">
+    <div ref="modal" class="box">
       <header class="header">
         <div class="section">
           <h2 ref="title" class="title" tabindex="-1">{{ title }}</h2>
@@ -51,10 +51,22 @@ export default {
   }
 }
 
+.modal {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .overlay {
   width: 100%;
+  height: 100%;
   position: absolute;
-  height: 100vh;
   background-color: #001919;
   opacity: 0.7;
   top: 0;
@@ -63,15 +75,12 @@ export default {
 }
 
 .box {
+  z-index: 10;
   background: $white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
   border: 1px solid $gray;
   padding: 1rem;
-  width: 90%;
-  transform: translate(-50%, 0);
-
+  width: 100%;
+  overflow: scroll;
   @media (min-width: 640px) {
     width: 500px;
   }
