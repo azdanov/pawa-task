@@ -19,7 +19,7 @@ public class DataLoader implements CommandLineRunner {
 
     public DataLoader(TaskService taskService) {
         this.taskService = taskService;
-        this.faker = new Faker();
+        faker = new Faker();
         priorities = new Priority[] {Priority.low, Priority.normal, Priority.high};
     }
 
