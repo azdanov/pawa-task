@@ -29,14 +29,21 @@
         >{{ task.title }}</Checkbox
       >
       <div class="panel">
-        <img class="icon" src="../assets/calendar.png" alt="Calendar" />
-        <span class="date">{{ task.dueDate | date }}</span>
-        <Button @click.native.prevent="() => openModal('show', index)"
-          ><img class="icon" src="../assets/speech-bubble.png" alt="Speech Icon"
-        /></Button>
-        <Button @click.native.prevent="() => openModal('edit', index)"
-          ><img class="icon" src="../assets/pencil.png" alt="Pencil"
-        /></Button>
+        <div class="panel__date">
+          <img class="icon" src="../assets/calendar.png" alt="Calendar" />
+          <span class="date">{{ task.dueDate | date }}</span>
+        </div>
+        <div class="panel__actions">
+          <Button @click.native.prevent="() => openModal('show', index)"
+            ><img
+              class="icon"
+              src="../assets/speech-bubble.png"
+              alt="Speech Icon"
+          /></Button>
+          <Button @click.native.prevent="() => openModal('edit', index)"
+            ><img class="icon" src="../assets/pencil.png" alt="Pencil"
+          /></Button>
+        </div>
       </div>
     </li>
   </ul>
@@ -97,8 +104,25 @@ export default {
   }
 }
 .panel {
-  align-items: center;
   display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .panel__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .panel__date {
+    display: none;
+  }
+
+  @media (min-width: 600px) {
+    .panel__date {
+      display: block;
+    }
+    flex-direction: row;
+  }
 }
 .icon {
   height: 1.2rem;
