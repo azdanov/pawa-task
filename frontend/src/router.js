@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Tasks from "./views/Tasks.vue";
-import NotFound from "./views/NotFound.vue";
+import Tasks from "@/views/Tasks.vue";
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(Router);
 

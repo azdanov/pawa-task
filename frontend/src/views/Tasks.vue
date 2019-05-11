@@ -18,9 +18,9 @@
 
 <script>
 import { mapState } from "vuex";
-import TaskList from "../components/TaskList";
-import Button from "../components/Button";
-import TaskModal from "../components/Modal/TaskModal";
+import TaskList from "@/components/TaskList";
+import Button from "@/components/Button";
+import TaskModal from "@/components/Modal/TaskModal";
 
 export default {
   components: { Button, TaskList, TaskModal },
