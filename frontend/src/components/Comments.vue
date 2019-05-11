@@ -94,7 +94,7 @@ export default {
       );
     },
     saveComment(index) {
-      if (this.$v.editingComment.text.$error) {
+      if (this.$v.editingComment.text.$invalid) {
         this.$v.comment.$touch();
         return;
       }

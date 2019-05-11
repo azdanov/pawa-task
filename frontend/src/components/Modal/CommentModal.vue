@@ -48,13 +48,13 @@ export default {
   },
   validations: {
     comment: {
-      required
+      required: required
     }
   },
   methods: {
     ...mapActions(["saveComment"]),
     submit() {
-      if (this.$v.comment.$error) {
+      if (this.$v.comment.$invalid) {
         this.$v.comment.$touch();
         return;
       }
