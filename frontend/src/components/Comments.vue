@@ -99,6 +99,10 @@ export default {
       );
     },
     saveComment(index) {
+      if (this.$v.editingComment.text.$invalid) {
+        this.$v.comment.$touch();
+        return;
+      }
       this.updateComment(this.editingComment);
       this.$set(this.comments[index], "text", this.editingComment.text);
       this.editingComment = null;
