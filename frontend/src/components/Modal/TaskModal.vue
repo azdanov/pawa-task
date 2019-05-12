@@ -194,7 +194,7 @@ export default {
         return;
       }
 
-      if (!this.$v.validationGroup.$dirty) {
+      if (!this.$v.validationGroup.$anyDirty) {
         this.close();
         return;
       }
