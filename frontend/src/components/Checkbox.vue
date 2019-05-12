@@ -32,6 +32,7 @@ export default {
 .wrapper {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .title {
   font-weight: normal;
@@ -58,17 +59,18 @@ export default {
   position: absolute;
   z-index: 0;
   left: 0;
+  top: 0;
   content: " ";
-  margin-top: 2px;
+  margin-top: 0.5rem;
 }
 
 .checkmark {
   opacity: 0;
   position: absolute;
   display: inline-block;
-  top: 8px;
-  left: -4px;
-  margin-top: 0.25rem;
+  top: 0;
+  left: -5px;
+  margin-top: 0.1rem;
   cursor: pointer;
   width: 22px;
   height: 20px;

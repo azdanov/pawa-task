@@ -119,7 +119,8 @@ export default {
 
   @media (min-width: 600px) {
     .panel__date {
-      display: block;
+      display: flex;
+      align-items: center;
     }
     flex-direction: row;
   }
