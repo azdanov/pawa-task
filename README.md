@@ -72,6 +72,10 @@ Just run `docker-composer up -d`. The client should be on `http://localhost:8000
 
 This app is hosted on [Heroku](https://heroku.com/home). Follow this [StackOverflow Answer](https://stackoverflow.com/questions/33633243/connecting-to-heroku-postgres-from-spring-boot/49978310#49978310) to setup you own app.
 
+## Schema
+
+![SQL Schema](./screenshots/schema.png)
+
 ## Commentary
 
 ### Backend
